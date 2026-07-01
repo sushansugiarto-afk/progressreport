@@ -1,0 +1,2867 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Tim Fasilitas, Lingkungan Kerja dan Pengembangan Diri • Ultra Luxury Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Marcellus&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ── reset & base ── */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-deep: #050A14;
+            --gold: #D4AF37;
+            --gold-light: #F0D78C;
+            --gold-pale: #F9EFD9;
+            --champagne: #F7EFE2;
+            --latte: #FFF8E7;
+            --emerald: #2ECC71;
+            --amber: #F39C12;
+            --rose: #E74C3C;
+            --glass-bg: rgba(8,20,40,0.55);
+            --glass-border: rgba(212,175,55,0.35);
+            --shadow-gold: 0 25px 50px -12px rgba(0,0,0,0.8), 0 0 0 1px rgba(212,175,55,0.2);
+            --shadow-gold-hover: 0 40px 70px -15px rgba(0,0,0,0.95), 0 0 0 1px rgba(212,175,55,0.4);
+            --text-primary: #FFF8E7;
+            --text-secondary: #E0D7C6;
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --font-accent: 'Marcellus', serif;
+            --heading-color: #FFF8E7;
+            --body-color: #FFF8E7;
+            --subtitle-color: #F7EFE2;
+            --badge-text-color: #FFF8E7;
+            --fs-kicker: 0.75rem;
+            --fs-main-title: 3.2rem;
+            --fs-subtitle: 1.05rem;
+            --fs-card-title: 1.8rem;
+            --fs-badge: 0.7rem;
+            --fs-body: 0.85rem;
+            --fs-footer: 0.75rem;
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--gold), #AA771C); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
+
+        body {
+            background: var(--bg-deep);
+            background-image: radial-gradient(ellipse at 20% 20%, rgba(212,175,55,0.06) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 80%, rgba(10,17,40,0.9) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, rgba(212,175,55,0.02) 0%, transparent 70%);
+            font-family: var(--font-body);
+            color: var(--body-color);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background 0.3s, color 0.3s;
+        }
+        .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; display: none; }
+        .particles.show { display: block; }
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 12px 2px rgba(212,175,55,0.6);
+            animation: floatUp 12s infinite ease-in;
+            opacity: 0;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+        }
+        body.grid-bg::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(212,175,55,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212,175,55,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .stars-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; display: none; }
+        .stars-container.show { display: block; }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        @keyframes twinkle { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        .dashboard { position: relative; z-index: 2; max-width: 1440px; width: 100%; margin: 0 auto; }
+        .ornate-divider { text-align: center; margin: 0.5rem 0 1.5rem; font-size: 1.4rem; color: var(--gold); opacity: 0.3; letter-spacing: 12px; font-family: var(--font-accent); }
+        .ornate-divider i { margin: 0 0.5rem; }
+
+        .header { text-align: center; margin-bottom: 2.5rem; position: relative; }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        .header .kicker { letter-spacing: 8px; text-transform: uppercase; color: var(--gold-light); font-size: var(--fs-kicker); margin-bottom: 0.4rem; font-weight: 400; }
+        .header h1 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: var(--fs-main-title);
+            color: var(--heading-color);
+            background: linear-gradient(180deg, var(--heading-color) 20%, var(--gold) 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        .header .subtitle { color: var(--subtitle-color); opacity: 0.85; display: inline-block; padding-bottom: 0.2rem; font-size: var(--fs-subtitle); font-weight: 300; letter-spacing: 1.5px; }
+        .header .subtitle span { color: var(--gold-light); font-weight: 400; }
+
+        .action-buttons {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.7rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .btn {
+            background: rgba(212,175,55,0.08);
+            border: 1px solid rgba(212,175,55,0.3);
+            color: var(--gold-light);
+            padding: 0.5rem 1.3rem;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.35s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+        }
+        .btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 30px rgba(212,175,55,0.4); transform: translateY(-2px); border-color: var(--gold); }
+        .btn-rose { color: var(--rose); border-color: rgba(231,76,60,0.3); background: rgba(231,76,60,0.05); }
+        .btn-rose:hover { background: var(--rose); color: #fff; border-color: var(--rose); }
+        .btn-emerald { color: var(--emerald); border-color: rgba(46,204,113,0.3); background: rgba(46,204,113,0.05); }
+        .btn-emerald:hover { background: var(--emerald); color: #fff; border-color: var(--emerald); }
+        .btn-history { color: var(--gold-pale); border-color: rgba(212,175,55,0.2); background: rgba(212,175,55,0.04); }
+        .btn-history:hover { background: rgba(212,175,55,0.2); border-color: var(--gold); color: var(--gold-light); }
+        .btn-exit-history { color: var(--rose); border-color: rgba(231,76,60,0.2); background: rgba(231,76,60,0.04); }
+        .btn-exit-history:hover { background: var(--rose); color: #fff; border-color: var(--rose); }
+
+        /* Lock toggle button */
+        .lock-toggle {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--rose);
+        }
+        .lock-toggle.unlocked {
+            color: var(--emerald);
+        }
+        .lock-toggle:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 20px currentColor;
+        }
+        .lock-toggle .lock-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 2rem; }
+        .card.full-width { grid-column: 1 / -1; }
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            border-radius: 32px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-gold);
+            padding: 2rem;
+            transition: all 0.45s cubic-bezier(0.16,1,0.3,1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(212,175,55,0.03) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-gold-hover); border-color: rgba(212,175,55,0.5); }
+        .card-header { display: flex; align-items: flex-start; gap: 1rem; }
+        .card-icon {
+            font-size: 1.6rem;
+            color: var(--gold);
+            background: rgba(212,175,55,0.10);
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            flex-shrink: 0;
+            border: 1px solid rgba(212,175,55,0.15);
+            transition: all 0.3s;
+        }
+        .card:hover .card-icon { background: rgba(212,175,55,0.18); box-shadow: 0 0 30px rgba(212,175,55,0.1); }
+        .card-title { font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-card-title); color: var(--heading-color); line-height: 1.25; }
+        .status-badge {
+            font-size: var(--fs-badge);
+            font-weight: 600;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+            border: 1px solid;
+            color: var(--badge-text-color) !important;
+            display: inline-block;
+            letter-spacing: 0.6px;
+        }
+        .badge-emerald { border-color: var(--emerald); background: rgba(46,204,113,0.08); }
+        .badge-amber { border-color: var(--amber); background: rgba(243,156,18,0.08); }
+        .badge-rose { border-color: var(--rose); background: rgba(231,76,60,0.08); }
+
+        .card-details-wrapper { display: none; animation: slideDown 0.5s cubic-bezier(0.16,1,0.3,1); }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .timeline-horizontal {
+            display: flex;
+            gap: 0.3rem;
+            overflow-x: auto;
+            padding: 0.8rem 0.2rem 0.5rem;
+            position: relative;
+            margin: 0.5rem 0;
+        }
+        .timeline-horizontal::before {
+            content: "";
+            position: absolute;
+            top: 22px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold) 0%, rgba(212,175,55,0.2) 100%);
+            z-index: 0;
+        }
+        .milestone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+            z-index: 1;
+            padding: 0 6px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .milestone:hover { transform: scale(1.05); }
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #0A1128;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 12px rgba(212,175,55,0.3);
+            margin-bottom: 0.3rem;
+            transition: all 0.3s;
+        }
+        .dot.final { border-color: var(--emerald); box-shadow: 0 0 14px rgba(46,204,113,0.4); background: var(--emerald); }
+        .dot.cancel { border-color: var(--rose); box-shadow: 0 0 14px rgba(231,76,60,0.4); background: var(--rose); }
+        .milestone .date { font-weight: 600; font-size: calc(var(--fs-body) * 0.85); color: var(--gold-light); letter-spacing: 0.3px; }
+        .milestone .desc { font-size: calc(var(--fs-body) * 0.75); color: var(--body-color); opacity: 0.85; max-width: 90px; text-align: center; line-height: 1.3; }
+
+        .consultation-list, .rencana-list {
+            max-height: 450px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin: 1rem 0;
+        }
+        .consult-item {
+            display: flex;
+            gap: 0.8rem;
+            background: rgba(255,255,255,0.02);
+            border-left: 3px solid rgba(212,175,55,0.4);
+            padding: 0.7rem 1rem;
+            border-radius: 0 14px 14px 0;
+            transition: background 0.2s;
+        }
+        .consult-item:hover { background: rgba(255,255,255,0.04); }
+        .consult-date { min-width: 65px; font-weight: 600; font-size: calc(var(--fs-body) * 0.9); color: var(--gold-light); }
+        .consult-instansi { font-weight: 600; font-size: var(--fs-body); color: var(--heading-color); }
+        .consult-channel { font-size: calc(var(--fs-body) * 0.75); background: rgba(212,175,55,0.15); color: var(--body-color); padding: 0.1rem 0.6rem; border-radius: 20px; margin-left: 0.5rem; }
+        .consult-topic { font-size: calc(var(--fs-body) * 0.9); color: var(--body-color); }
+        .consult-category { font-size: calc(var(--fs-body) * 0.8); color: var(--body-color); opacity: 0.6; font-style: italic; }
+
+        .rencana-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(212,175,55,0.12);
+            color: var(--body-color);
+            font-size: var(--fs-body);
+        }
+        .rencana-item i { color: var(--gold); }
+
+        .evidence-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, #D4AF37, #F0D78C, #D4AF37);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            font-size: calc(var(--fs-body) * 0.9);
+            text-decoration: none;
+            margin-right: 0.6rem;
+            transition: all 0.3s;
+        }
+        .evidence-link i { font-size: 0.7rem; -webkit-text-fill-color: var(--gold); }
+        .evidence-link.shimmer { animation: shimmer 3s linear infinite; }
+        .evidence-link.pulse-anim { animation: pulseAnim 2s infinite; }
+        @keyframes shimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+        @keyframes pulseAnim { 0% { opacity: 0.7; } 50% { opacity: 1; filter: drop-shadow(0 0 12px var(--gold)); } 100% { opacity: 0.7; } }
+        .evidence-link:hover { filter: drop-shadow(0 0 16px #D4AF37); transform: scale(1.04); }
+
+        .card-footer-note {
+            margin-top: 1.2rem;
+            font-size: calc(var(--fs-body) * 0.9);
+            color: var(--body-color);
+            border-top: 1px dashed rgba(212,175,55,0.2);
+            padding-top: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .dashboard-footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: var(--fs-footer);
+            color: var(--subtitle-color);
+            opacity: 0.6;
+            border-top: 1px solid rgba(212,175,55,0.2);
+            padding-top: 1.5rem;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+
+        .edit-btn, .move-btn, .undo-style-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 0.2rem;
+            transition: 0.3s;
+            padding: 0.2rem 0.4rem;
+            border-radius: 8px;
+        }
+        .edit-btn:hover, .move-btn:hover, .undo-style-btn:hover { background: rgba(212,175,55,0.12); text-shadow: 0 0 12px var(--gold); transform: scale(1.1); }
+        .save-indicator { font-size: 0.7rem; color: var(--emerald); margin-left: 0.5rem; opacity: 0; transition: 0.3s; font-weight: bold; }
+        .save-indicator.show { opacity: 1; }
+        .undo-indicator { font-size: 0.7rem; color: var(--gold-light); margin-left: 0.5rem; opacity: 0; transition: 0.3s; font-weight: bold; }
+        .undo-indicator.show { opacity: 1; }
+
+        .edit-form input, .edit-form textarea, .edit-form select, .custom-panel input, .custom-panel select {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--gold);
+            color: var(--latte);
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            outline: none;
+            transition: border 0.2s;
+        }
+        .edit-form input:focus, .edit-form textarea:focus, .edit-form select:focus, .custom-panel input:focus, .custom-panel select:focus {
+            border-color: var(--gold-light);
+            box-shadow: 0 0 20px rgba(212,175,55,0.1);
+        }
+        .edit-form .timeline-edit {
+            display: flex;
+            gap: 0.4rem;
+            align-items: center;
+            margin-bottom: 0.4rem;
+            flex-wrap: wrap;
+            background: rgba(255,255,255,0.02);
+            padding: 0.4rem 0.6rem;
+            border-radius: 10px;
+        }
+
+        .custom-panel {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(3,6,14,0.96);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--gold);
+            border-radius: 24px;
+            padding: 2rem;
+            z-index: 999;
+            color: var(--latte);
+            width: 380px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.95), 0 0 0 1px rgba(212,175,55,0.15);
+        }
+        .custom-panel.active { display: block; animation: panelFade 0.35s ease-out; }
+        @keyframes panelFade { from { opacity: 0; transform: translateY(12px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .custom-panel label { display: block; margin: 0.6rem 0 0.2rem; font-size: 0.75rem; font-weight: 500; color: var(--gold-light); letter-spacing: 0.3px; }
+        .custom-panel input[type="text"], .custom-panel select { width: 100%; margin-bottom: 0.2rem; }
+        .custom-panel input[type="color"] { width: 100%; height: 38px; cursor: pointer; border-radius: 8px; border: 1px solid var(--gold); background: transparent; padding: 0; }
+        .custom-panel .password-change-area {
+            margin-top: 1.2rem;
+            border-top: 1px dashed rgba(212,175,55,0.2);
+            padding-top: 1rem;
+        }
+        .custom-panel .password-change-area label {
+            font-size: 0.75rem;
+            color: var(--gold-light);
+        }
+        .custom-panel .password-change-area input {
+            width: 100%;
+            padding: 0.4rem 0.6rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 8px;
+            color: var(--latte);
+            font-family: var(--font-body);
+            outline: none;
+        }
+        .custom-panel .password-change-area input:focus {
+            border-color: var(--gold);
+        }
+        .custom-panel .password-change-area .pwd-hint {
+            font-size: 0.6rem;
+            opacity: 0.4;
+            margin-top: 0.2rem;
+        }
+
+        .header-edit-area {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .header-edit-area input { background: rgba(0,0,0,0.3); border: 1px solid var(--gold); color: var(--latte); padding: 0.3rem 0.6rem; border-radius: 8px; font-family: var(--font-body); }
+
+        .mini-calendar {
+            margin: 1.5rem 0 0.5rem;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 18px;
+            padding: 1rem 1.2rem;
+            transition: all 0.3s;
+        }
+        .mini-calendar .cal-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .mini-calendar .cal-header-title { font-weight: 600; font-size: 0.85rem; color: var(--heading-color); display: inline-flex; align-items: center; gap: 0.5rem; }
+        .mini-calendar .cal-header-title i { color: var(--gold); }
+        .mini-calendar .cal-chevron { font-size: 0.7rem; color: var(--gold); transition: transform 0.3s; }
+        .mini-calendar .cal-nav-btn { background: rgba(212,175,55,0.08); border: none; color: var(--gold-light); cursor: pointer; padding: 2px 8px; font-size: 0.8rem; border-radius: 6px; transition: 0.2s; }
+        .mini-calendar .cal-nav-btn:hover { background: rgba(212,175,55,0.2); }
+        .mini-calendar .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; margin-top: 0.6rem; }
+        .mini-calendar .cal-day {
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.25s ease;
+            background: rgba(255,255,255,0.02);
+            color: var(--body-color);
+            font-weight: 400;
+            position: relative;
+        }
+        .mini-calendar .cal-day.has-event { background: rgba(212,175,55,0.18); border: 1px solid var(--gold); font-weight: 600; color: var(--gold-light); box-shadow: 0 0 12px rgba(212,175,55,0.2); }
+        .mini-calendar .cal-day.has-link { border-color: var(--emerald); box-shadow: 0 0 12px rgba(46,204,113,0.15); }
+        .mini-calendar .cal-day.has-link::after { content: "🔗"; font-size: 0.45rem; position: absolute; top: -2px; right: -2px; opacity: 0.7; }
+        .mini-calendar .cal-day:hover { filter: brightness(1.5); transform: scale(1.06); }
+        .mini-calendar .cal-header-days { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; text-align: center; font-size: 0.6rem; color: var(--gold); font-weight: 600; margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .mini-calendar .cal-details { margin-top: 0.8rem; font-size: 0.75rem; border-top: 1px dashed rgba(212,175,55,0.15); padding-top: 0.7rem; display: none; }
+        .mini-calendar .cal-details-title { display: flex; justify-content: space-between; align-items: center; color: var(--gold-light); font-weight: 600; margin-bottom: 6px; flex-wrap: wrap; gap: 0.4rem; }
+        .mini-calendar .cal-details-title span { color: var(--heading-color); }
+        .mini-calendar .cal-event-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .mini-calendar .cal-event-item .cal-event-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 8px currentColor; }
+        .mini-calendar .cal-event-item .cal-event-text { font-size: 0.8rem; font-weight: 500; }
+        .mini-calendar .cal-event-item .cal-event-link { margin-left: auto; font-size: 0.7rem; color: var(--emerald); opacity: 0.7; text-decoration: none; transition: 0.2s; }
+        .mini-calendar .cal-event-item .cal-event-link:hover { opacity: 1; }
+        .mini-calendar .cal-textarea { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.2); color: var(--body-color); border-radius: 8px; padding: 8px 10px; font-size: 0.75rem; resize: vertical; outline: none; font-family: var(--font-body); }
+        .mini-calendar .cal-textarea:focus { border-color: var(--gold-light); box-shadow: 0 0 16px rgba(212,175,55,0.08); }
+        .mini-calendar .cal-link-input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.2); color: var(--body-color); border-radius: 8px; padding: 8px 10px; font-size: 0.75rem; outline: none; margin-top: 4px; font-family: var(--font-body); }
+        .mini-calendar .cal-link-input:focus { border-color: var(--gold-light); box-shadow: 0 0 16px rgba(212,175,55,0.08); }
+        .mini-calendar .cal-evidence-area { margin-top: 0.5rem; border-top: 1px dashed rgba(212,175,55,0.1); padding-top: 0.5rem; }
+        .mini-calendar .cal-evidence-area .evidence-tag { display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.12); border-radius: 16px; padding: 0.1rem 0.5rem 0.1rem 0.3rem; font-size: 0.6rem; color: var(--gold-light); margin-right: 0.3rem; margin-bottom: 0.2rem; }
+        .mini-calendar .cal-evidence-area .evidence-tag i { font-size: 0.5rem; cursor: pointer; opacity: 0.5; transition: 0.2s; }
+        .mini-calendar .cal-evidence-area .evidence-tag i:hover { opacity: 1; color: var(--rose); }
+
+        /* Global Calendar - Diperbaiki agar rapi seperti awal */
+        .global-calendar-wrapper { margin-top: 2.5rem; position: relative; }
+        .global-calendar-wrapper .card {
+            background: rgba(8,20,40,0.7);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(212,175,55,0.4);
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.9), 0 0 0 1px rgba(212,175,55,0.2), inset 0 0 80px rgba(212,175,55,0.02);
+            border-radius: 36px;
+            padding: 2rem 2.2rem;
+            transition: all 0.4s;
+        }
+        .global-calendar-wrapper .card:hover { transform: translateY(-4px); box-shadow: 0 40px 80px -15px rgba(0,0,0,0.95), 0 0 0 1px rgba(212,175,55,0.35), inset 0 0 80px rgba(212,175,55,0.04); }
+        .global-calendar-wrapper .card-icon { background: rgba(212,175,55,0.15); box-shadow: 0 0 30px rgba(212,175,55,0.06); }
+        .global-calendar-wrapper .card-title { font-size: calc(var(--fs-card-title) * 1.1); letter-spacing: 0.5px; }
+        .global-calendar-wrapper .cal-header-title { font-size: 1.1rem; font-weight: 700; color: var(--gold-light); }
+        .global-calendar-wrapper .cal-day {
+            height: 34px;
+            font-size: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.25s ease;
+            font-weight: 500;
+            background: rgba(255,255,255,0.02);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .global-calendar-wrapper .cal-day.has-event { background: rgba(212,175,55,0.15); border: 1px solid var(--gold); color: var(--gold-light); box-shadow: 0 0 16px rgba(212,175,55,0.15), inset 0 0 20px rgba(212,175,55,0.03); font-weight: 700; }
+        .global-calendar-wrapper .cal-day.has-link { border-color: var(--emerald); box-shadow: 0 0 16px rgba(46,204,113,0.12); }
+        .global-calendar-wrapper .cal-day.has-link::after { content: "🔗"; font-size: 0.5rem; position: absolute; top: -4px; right: -4px; opacity: 0.6; }
+        .global-calendar-wrapper .cal-day:hover { transform: scale(1.08); filter: brightness(1.5); box-shadow: 0 0 24px rgba(212,175,55,0.2); }
+        .global-calendar-wrapper .cal-header-days { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; text-align: center; font-size: 0.7rem; color: var(--gold); opacity: 0.8; text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; margin-bottom: 6px; }
+        .global-calendar-wrapper .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+        .global-calendar-wrapper .cal-details { background: rgba(0,0,0,0.2); border-radius: 14px; padding: 0.8rem 1.2rem; margin-top: 1rem; border: 1px solid rgba(212,175,55,0.08); }
+        .global-calendar-wrapper .cal-event-item { padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); cursor: pointer; transition: 0.25s; border-radius: 8px; padding-left: 0.5rem; display: flex; align-items: center; gap: 0.6rem; }
+        .global-calendar-wrapper .cal-event-item:hover { background: rgba(212,175,55,0.06); transform: translateX(4px); }
+        .global-calendar-wrapper .cal-event-item:last-child { border-bottom: none; }
+        .global-calendar-wrapper .cal-event-item .cal-event-text { font-size: 0.9rem; font-weight: 500; flex: 1; }
+        .global-calendar-wrapper .cal-event-item .cal-event-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 12px currentColor; }
+        .global-calendar-wrapper .cal-event-item .cal-event-link-icon { margin-left: auto; font-size: 0.8rem; color: var(--emerald); opacity: 0.5; transition: 0.2s; text-decoration: none; }
+        .global-calendar-wrapper .cal-event-item .cal-event-link-icon:hover { opacity: 1; }
+        .global-calendar-wrapper .cal-nav-btn { background: rgba(212,175,55,0.08); border-radius: 30px; padding: 4px 14px; font-size: 0.85rem; transition: 0.3s; border: none; color: var(--gold-light); cursor: pointer; }
+        .global-calendar-wrapper .cal-nav-btn:hover { background: rgba(212,175,55,0.2); transform: scale(1.04); }
+
+        .card.highlight-card {
+            animation: highlightPulse 1.5s ease 3;
+            border-color: var(--gold) !important;
+            box-shadow: 0 0 50px rgba(212,175,55,0.25), var(--shadow-gold-hover) !important;
+        }
+        @keyframes highlightPulse { 0%,100% { box-shadow: 0 0 20px rgba(212,175,55,0.15); } 50% { box-shadow: 0 0 60px rgba(212,175,55,0.35); } }
+
+        .undo-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(3,6,14,0.96);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--gold);
+            border-radius: 40px;
+            padding: 0.8rem 2rem;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            gap: 1.2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+            color: var(--latte);
+            font-size: 0.9rem;
+        }
+        .undo-toast.show { display: flex; animation: toastIn 0.4s ease-out; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(30px) scale(0.95); } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } }
+        .undo-toast .btn-undo-toast { background: var(--gold); color: #000; border: none; padding: 0.3rem 1.2rem; border-radius: 30px; font-weight: 700; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
+        .undo-toast .btn-undo-toast:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(212,175,55,0.3); }
+        .undo-toast .btn-dismiss-toast { background: none; border: none; color: rgba(255,255,255,0.4); cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
+        .undo-toast .btn-dismiss-toast:hover { color: #fff; }
+
+        /* Password Modal */
+        .password-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .password-modal.active { display: flex; }
+        .password-modal .modal-box {
+            background: rgba(8,20,40,0.95);
+            border: 1px solid var(--gold);
+            border-radius: 28px;
+            padding: 2.5rem 2rem;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.95);
+            text-align: center;
+        }
+        .password-modal .modal-box h2 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--gold-light);
+            margin-bottom: 0.5rem;
+        }
+        .password-modal .modal-box p {
+            color: var(--body-color);
+            opacity: 0.6;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .password-modal .password-input-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1.2rem;
+        }
+        .password-modal .password-input-wrapper input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            padding-right: 3rem;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 40px;
+            color: var(--latte);
+            font-size: 1rem;
+            font-family: var(--font-body);
+            outline: none;
+            transition: border 0.3s;
+        }
+        .password-modal .password-input-wrapper input:focus {
+            border-color: var(--gold);
+        }
+        .password-modal .password-input-wrapper .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gold);
+            cursor: pointer;
+            font-size: 1.2rem;
+            opacity: 0.6;
+            transition: 0.2s;
+        }
+        .password-modal .password-input-wrapper .toggle-password:hover {
+            opacity: 1;
+        }
+        .password-modal .modal-actions {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .password-modal .modal-actions .btn {
+            min-width: 100px;
+        }
+        .password-modal .error-msg {
+            color: var(--rose);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            min-height: 1.2rem;
+        }
+
+        .history-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .history-panel.active { display: flex; }
+        .history-panel .panel-content {
+            background: rgba(8,20,40,0.95);
+            border: 1px solid var(--gold);
+            border-radius: 32px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.95);
+            color: var(--latte);
+        }
+        .history-panel .panel-content h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--gold-light);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            padding-bottom: 0.5rem;
+        }
+        .history-panel .panel-content .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: 0.2s;
+            border-radius: 10px;
+        }
+        .history-panel .panel-content .history-item:hover { background: rgba(212,175,55,0.08); }
+        .history-panel .panel-content .history-item .timestamp { font-weight: 500; color: var(--gold-light); }
+        .history-panel .panel-content .history-item .badge-history { font-size: 0.65rem; background: rgba(212,175,55,0.15); padding: 0.2rem 0.8rem; border-radius: 20px; color: var(--gold-pale); }
+        .history-panel .panel-content .history-item .load-btn { background: rgba(212,175,55,0.1); border: 1px solid var(--gold); color: var(--gold-light); padding: 0.2rem 1rem; border-radius: 20px; cursor: pointer; transition: 0.2s; font-size: 0.7rem; }
+        .history-panel .panel-content .history-item .load-btn:hover { background: var(--gold); color: #000; }
+        .history-panel .panel-content .close-history {
+            display: block;
+            margin: 1.5rem auto 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            padding: 0.6rem 2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .history-panel .panel-content .close-history:hover { background: rgba(255,255,255,0.1); }
+
+        .history-mode-banner {
+            display: none;
+            background: rgba(212,175,55,0.15);
+            border: 1px solid var(--gold);
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            color: var(--gold-light);
+            font-size: 0.8rem;
+            margin: 0.5rem 0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .history-mode-banner.active { display: block; }
+
+        .lock-indicator {
+            display: none;
+        }
+
+        @media (max-width: 860px) {
+            .cards-grid { grid-template-columns: 1fr; }
+            .custom-panel { width: 94%; right: 3%; top: 10px; max-height: 90vh; padding: 1.5rem; }
+            .undo-toast { width: 92%; padding: 0.8rem 1.2rem; flex-wrap: wrap; justify-content: center; }
+            .global-calendar-wrapper .cal-day { height: 30px; font-size: 0.7rem; }
+            .global-calendar-wrapper .cal-event-item .cal-event-link-icon { display: none; }
+            :root { --fs-main-title: 2.2rem; --fs-card-title: 1.5rem; }
+            .history-panel .panel-content { padding: 1.2rem; max-width: 95%; }
+            .action-buttons .btn { font-size: 0.7rem; padding: 0.4rem 0.9rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 1rem; }
+            .card { padding: 1.2rem; }
+            .header h1 { font-size: 1.8rem; }
+            .mini-calendar { padding: 0.8rem; }
+            .mini-calendar .cal-day { height: 24px; font-size: 0.6rem; }
+            .global-calendar-wrapper .card { padding: 1.2rem; }
+            .global-calendar-wrapper .cal-day { height: 26px; font-size: 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Password Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="modal-box">
+            <h2><i class="fas fa-lock" style="color:var(--gold);"></i> Verifikasi Editor</h2>
+            <p>Masukkan password untuk mengedit data</p>
+            <div class="password-input-wrapper">
+                <input type="password" id="passwordInput" placeholder="Password" autofocus />
+                <button class="toggle-password" id="togglePasswordBtn" type="button">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+            <div class="error-msg" id="passwordError"></div>
+            <div class="modal-actions">
+                <button class="btn" id="passwordConfirmBtn"><i class="fas fa-check"></i> Konfirmasi</button>
+                <button class="btn btn-rose" id="passwordCancelBtn"><i class="fas fa-times"></i> Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Change Modal -->
+    <div class="password-modal" id="changePasswordModal">
+        <div class="modal-box">
+            <h2><i class="fas fa-key" style="color:var(--gold);"></i> Ganti Password</h2>
+            <p>Masukkan password lama dan password baru</p>
+            <div class="password-input-wrapper">
+                <input type="password" id="oldPasswordInput" placeholder="Password lama" />
+                <button class="toggle-password" onclick="togglePwdVisibility('oldPasswordInput', this)" type="button">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+            <div class="password-input-wrapper">
+                <input type="password" id="newPasswordInput" placeholder="Password baru" />
+                <button class="toggle-password" onclick="togglePwdVisibility('newPasswordInput', this)" type="button">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+            <div class="password-input-wrapper">
+                <input type="password" id="confirmPasswordInput" placeholder="Konfirmasi password baru" />
+                <button class="toggle-password" onclick="togglePwdVisibility('confirmPasswordInput', this)" type="button">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+            <div class="error-msg" id="changePwdError"></div>
+            <div class="modal-actions">
+                <button class="btn" id="changePwdConfirmBtn"><i class="fas fa-save"></i> Simpan</button>
+                <button class="btn btn-rose" id="changePwdCancelBtn"><i class="fas fa-times"></i> Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="particles" id="particles"></div>
+    <div class="stars-container" id="starsContainer"></div>
+
+    <div class="dashboard" id="dashboard-content">
+        <header class="header" id="mainHeader">
+            <div class="kicker" id="kickerText">Progress Report</div>
+            <h1 id="mainTitle">Tim Fasilitas, Lingkungan Kerja dan Pengembangan Diri</h1>
+            <div class="subtitle"><span id="periodeText">Januari – Juni 2026</span> • Update <span id="updateDate">19 Juni 2026</span></div>
+
+            <div class="header-edit-area" id="headerEditArea" style="display:none;">
+                <input type="text" id="editKicker" placeholder="Kicker" style="width:150px;" />
+                <input type="text" id="editMainTitle" placeholder="Judul Utama" style="width:300px;" />
+                <input type="text" id="editPeriode" placeholder="Periode" style="width:200px;" />
+                <input type="text" id="editUpdate" placeholder="Update" style="width:130px;" />
+                <button class="btn" onclick="saveHeaderEdit()"><i class="fas fa-save"></i></button>
+                <button class="btn btn-rose" onclick="cancelHeaderEdit()"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn" onclick="toggleHeaderEdit()"><i class="fas fa-edit"></i> Edit Header</button>
+                <button class="btn" onclick="downloadHTML()"><i class="fas fa-code"></i> Unduh HTML</button>
+                <button class="btn" onclick="addNewCard()"><i class="fas fa-plus-circle"></i> Tambah RHK</button>
+                <button class="btn btn-emerald" onclick="undoLastAction()" id="undoBtn"><i class="fas fa-undo-alt"></i> Undo <span id="undoCount" style="font-size:0.7rem; opacity:0.7;"></span></button>
+                <button class="btn btn-rose" onclick="resetAllData()"><i class="fas fa-trash-alt"></i> Reset</button>
+                <button class="btn" onclick="toggleCustomPanel()"><i class="fas fa-palette"></i> Kustomisasi</button>
+                <button class="btn btn-history" onclick="openHistoryPanel()"><i class="fas fa-clock-rotate-left"></i> History</button>
+                <button class="btn btn-exit-history" id="exitHistoryBtn" style="display:none;" onclick="exitHistoryMode()"><i class="fas fa-arrow-left"></i> Keluar History</button>
+                <button class="lock-toggle" id="lockToggle" onclick="toggleLock()" title="Klik untuk mengunci/membuka editor">
+                    <i class="fas fa-lock" id="lockIcon"></i>
+                    <span class="lock-label" id="lockLabel">Terkunci</span>
+                </button>
+                <span id="globalSaveIndicator" class="save-indicator">✓ Tersimpan</span>
+                <span id="undoIndicator" class="undo-indicator">↩ Undo tersedia</span>
+            </div>
+            <div class="history-mode-banner" id="historyBanner">📜 Mode History – Menampilkan snapshot dari <span id="historyTimestamp"></span></div>
+        </header>
+
+        <div class="ornate-divider"><i class="fas fa-gem"></i> <i class="fas fa-circle"></i> <i class="fas fa-gem"></i></div>
+
+        <div class="cards-grid" id="cardsContainer"></div>
+
+        <div id="globalCalendarContainer" class="global-calendar-wrapper"></div>
+
+        <div class="dashboard-footer">
+            Tim Fasilitas, Lingkungan Kerja dan Pengembangan Diri. Direktorat Kinerja dan Penghargaan ASN. Badan Kepegawaian Negara 2026<br />
+            <span style="font-size:0.65rem; opacity:0.5; letter-spacing:1.5px;">✦ Personal Prototype Developed by Sushan ✦</span>
+        </div>
+    </div>
+
+    <!-- History Panel -->
+    <div class="history-panel" id="historyPanel">
+        <div class="panel-content">
+            <h2><i class="fas fa-clock-rotate-left" style="color:var(--gold);"></i> Riwayat Perubahan</h2>
+            <div id="historyList" style="margin-top:0.5rem;"></div>
+            <button class="close-history" onclick="closeHistoryPanel()"><i class="fas fa-times"></i> Tutup</button>
+        </div>
+    </div>
+
+    <!-- Undo Toast -->
+    <div class="undo-toast" id="undoToast">
+        <span id="undoToastMsg"><i class="fas fa-undo-alt" style="color:var(--gold);"></i> Data telah dipulihkan</span>
+        <button class="btn-undo-toast" onclick="dismissUndoToast()">OK</button>
+        <button class="btn-dismiss-toast" onclick="dismissUndoToast()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Customization Panel -->
+    <div class="custom-panel" id="customPanel">
+        <h3 style="color:var(--gold); margin-bottom:0.5rem; font-family:var(--font-heading); font-size:1.6rem;">Kustomisasi</h3>
+        <h4 style="color:var(--gold-light); font-size:0.8rem; margin-top:1rem; border-bottom:1px dashed rgba(212,175,55,0.2); padding-bottom:0.2rem;">Warna &amp; Tema</h4>
+        <label>Latar</label> <input type="color" id="bgColor" value="#050A14" />
+        <label>Judul</label> <input type="color" id="headingColor" value="#FFF8E7" />
+        <label>Isi</label> <input type="color" id="bodyColor" value="#FFF8E7" />
+        <label>Subtitle</label> <input type="color" id="subtitleColor" value="#F7EFE2" />
+        <label>Teks Badge</label> <input type="color" id="badgeTextColor" value="#FFF8E7" />
+        <h4 style="color:var(--gold-light); font-size:0.8rem; margin-top:1.2rem; border-bottom:1px dashed rgba(212,175,55,0.2); padding-bottom:0.2rem;">Ukuran Teks</h4>
+        <label>Kicker</label> <input type="text" id="fsKicker" placeholder="0.75rem" />
+        <label>Judul Utama</label> <input type="text" id="fsMainTitle" placeholder="3.2rem" />
+        <label>Subtitle</label> <input type="text" id="fsSubtitle" placeholder="1.05rem" />
+        <label>Judul RHK</label> <input type="text" id="fsCardTitle" placeholder="1.8rem" />
+        <label>Badge</label> <input type="text" id="fsBadge" placeholder="0.7rem" />
+        <label>Isi</label> <input type="text" id="fsBody" placeholder="0.85rem" />
+        <label>Footer</label> <input type="text" id="fsFooter" placeholder="0.75rem" />
+        <h4 style="color:var(--gold-light); font-size:0.8rem; margin-top:1.2rem; border-bottom:1px dashed rgba(212,175,55,0.2); padding-bottom:0.2rem;">Tipografi</h4>
+        <label>Font Judul</label>
+        <select id="headingFont">
+            <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+            <option value="'Playfair Display', serif">Playfair Display</option>
+            <option value="'Inter', sans-serif">Inter</option>
+        </select>
+        <label>Font Isi</label>
+        <select id="bodyFont">
+            <option value="'Inter', sans-serif">Inter</option>
+            <option value="'Cormorant Garamond', serif">Cormorant</option>
+            <option value="'Roboto', sans-serif">Roboto</option>
+        </select>
+        <label>Animasi Link</label>
+        <select id="animationStyle">
+            <option value="shimmer">Shimmer</option>
+            <option value="pulse">Pulse</option>
+            <option value="none">None</option>
+        </select>
+        <label>Ilustrasi</label>
+        <select id="particleStyle">
+            <option value="both">Emas + Grid</option>
+            <option value="particles">Emas saja</option>
+            <option value="grid">Grid saja</option>
+            <option value="stars">Bintang</option>
+            <option value="none">None</option>
+        </select>
+
+        <!-- Password Change -->
+        <div class="password-change-area">
+            <h4 style="color:var(--gold-light); font-size:0.8rem; margin-bottom:0.5rem; border-bottom:1px dashed rgba(212,175,55,0.2); padding-bottom:0.2rem;">🔑 Ganti Password Editor</h4>
+            <button class="btn" onclick="openChangePassword()" style="width:100%; justify-content:center; margin-top:0.3rem;">
+                <i class="fas fa-key"></i> Ganti Password
+            </button>
+            <div class="pwd-hint">Password saat ini: <span id="currentPwdDisplay">••••</span></div>
+        </div>
+
+        <div style="display:flex; gap:0.6rem; margin-top:1.5rem;">
+            <button class="btn" onclick="applyCustomization()" style="flex:1;">Terapkan</button>
+            <button class="btn btn-rose" onclick="undoCustomization()" style="flex:1;"><i class="fas fa-undo-alt"></i> Undo</button>
+        </div>
+        <button class="btn" onclick="toggleCustomPanel()" style="margin-top:0.6rem; width:100%; background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.15); color:#fff; justify-content:center;">Tutup</button>
+    </div>
+
+    <script>
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 0.  PASSWORD & LOCK SYSTEM
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        let STORED_PASSWORD = localStorage.getItem('editorPassword') || '8888';
+        let isEditingEnabled = sessionStorage.getItem('editorUnlocked') === 'true';
+
+        // Toggle lock
+        function toggleLock() {
+            if (isEditingEnabled) {
+                // Lock
+                isEditingEnabled = false;
+                sessionStorage.setItem('editorUnlocked', 'false');
+                updateLockUI();
+                showUndoToast('🔒 Editor terkunci.');
+            } else {
+                // Unlock - minta password
+                showPasswordModal(() => {
+                    isEditingEnabled = true;
+                    sessionStorage.setItem('editorUnlocked', 'true');
+                    updateLockUI();
+                    showUndoToast('🔓 Editor terbuka.');
+                });
+            }
+        }
+
+        function updateLockUI() {
+            const icon = document.getElementById('lockIcon');
+            const label = document.getElementById('lockLabel');
+            const toggle = document.getElementById('lockToggle');
+            if (isEditingEnabled) {
+                icon.className = 'fas fa-lock-open';
+                label.textContent = 'Terbuka';
+                toggle.className = 'lock-toggle unlocked';
+            } else {
+                icon.className = 'fas fa-lock';
+                label.textContent = 'Terkunci';
+                toggle.className = 'lock-toggle';
+            }
+        }
+
+        // Password modal
+        function showPasswordModal(callback) {
+            if (isEditingEnabled) {
+                if (callback) callback();
+                return;
+            }
+            const modal = document.getElementById('passwordModal');
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            input.value = '';
+            error.textContent = '';
+            modal.classList.add('active');
+            // Simpan callback
+            modal._callback = callback;
+            setTimeout(() => input.focus(), 100);
+        }
+
+        function hidePasswordModal() {
+            document.getElementById('passwordModal').classList.remove('active');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').textContent = '';
+        }
+
+        function confirmPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            const modal = document.getElementById('passwordModal');
+            if (input.value === STORED_PASSWORD) {
+                isEditingEnabled = true;
+                sessionStorage.setItem('editorUnlocked', 'true');
+                updateLockUI();
+                hidePasswordModal();
+                if (modal._callback) {
+                    const cb = modal._callback;
+                    modal._callback = null;
+                    cb();
+                }
+                showUndoToast('✅ Editor diaktifkan.');
+            } else {
+                error.textContent = '❌ Password salah!';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Toggle password visibility
+        document.getElementById('togglePasswordBtn').addEventListener('click', function() {
+            const input = document.getElementById('passwordInput');
+            const icon = this.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        });
+
+        function togglePwdVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        document.getElementById('passwordConfirmBtn').addEventListener('click', confirmPassword);
+        document.getElementById('passwordCancelBtn').addEventListener('click', function() {
+            document.getElementById('passwordModal')._callback = null;
+            hidePasswordModal();
+        });
+        document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') confirmPassword();
+            if (e.key === 'Escape') {
+                document.getElementById('passwordModal')._callback = null;
+                hidePasswordModal();
+            }
+        });
+
+        // Change Password
+        function openChangePassword() {
+            if (!isEditingEnabled) {
+                showUndoToast('⚠️ Buka kunci editor terlebih dahulu.');
+                return;
+            }
+            document.getElementById('changePasswordModal').classList.add('active');
+            document.getElementById('oldPasswordInput').value = '';
+            document.getElementById('newPasswordInput').value = '';
+            document.getElementById('confirmPasswordInput').value = '';
+            document.getElementById('changePwdError').textContent = '';
+            setTimeout(() => document.getElementById('oldPasswordInput').focus(), 100);
+        }
+
+        function closeChangePassword() {
+            document.getElementById('changePasswordModal').classList.remove('active');
+        }
+
+        function confirmChangePassword() {
+            const oldPwd = document.getElementById('oldPasswordInput').value;
+            const newPwd = document.getElementById('newPasswordInput').value;
+            const confirmPwd = document.getElementById('confirmPasswordInput').value;
+            const error = document.getElementById('changePwdError');
+
+            if (oldPwd !== STORED_PASSWORD) {
+                error.textContent = '❌ Password lama salah!';
+                return;
+            }
+            if (newPwd.length < 4) {
+                error.textContent = '❌ Password baru minimal 4 karakter!';
+                return;
+            }
+            if (newPwd !== confirmPwd) {
+                error.textContent = '❌ Konfirmasi password tidak cocok!';
+                return;
+            }
+            STORED_PASSWORD = newPwd;
+            localStorage.setItem('editorPassword', STORED_PASSWORD);
+            document.getElementById('currentPwdDisplay').textContent = '••••';
+            closeChangePassword();
+            showUndoToast('✅ Password berhasil diubah!');
+        }
+
+        document.getElementById('changePwdConfirmBtn').addEventListener('click', confirmChangePassword);
+        document.getElementById('changePwdCancelBtn').addEventListener('click', closeChangePassword);
+        document.getElementById('changePasswordModal').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') confirmChangePassword();
+            if (e.key === 'Escape') closeChangePassword();
+        });
+
+        // Check password wrapper
+        function checkPassword(callback) {
+            if (isEditingEnabled) {
+                if (callback) callback();
+                return;
+            }
+            showPasswordModal(callback);
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 1.  DATA DEFAULT & STATE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const defaultData = [
+            { id: 'se-bullying', title: 'Draft SE Bullying', icon: 'fa-gavel', badgeClass: 'badge-amber', badgeText: 'Menunggu Paparan',
+                timeline: [{ date: '8 Apr', desc: 'Follow up ke Dit. BCN & BHKP', dotClass: '' }, { date: '9 Apr',
+                        desc: 'ND kembali BCN → BHKP', dotClass: '' }, { date: '15 Apr', desc: 'Follow up ND, tunggu jadwal',
+                        dotClass: '' }, { date: '30 Apr', desc: 'Follow up, masih menunggu', dotClass: '' },
+                    { date: '26 Mei', desc: 'ND pengajuan ke Deputi', dotClass: '' }, { date: '29 Mei',
+                        desc: 'ND dibatalkan, Plt langsung', dotClass: 'cancel' }
+                    ],
+                footerIcon: 'fa-exclamation-triangle', footerText: 'Menunggu penyampaian langsung Plt ke Deputi.',
+                evidenceLinks: [{ label: 'Evidence', url: 'https://docs.google.com/document/d/15pE1Cfd9tZGLtIoBM4NnME1tYDyTWFao/edit' }],
+                cardStyle: {}, calendarEvents: {}
+            },
+            { id: 'iklim-kerja', title: 'Instrumen Iklim Kerja', icon: 'fa-cloud-sun', badgeClass: 'badge-emerald',
+                badgeText: 'Final & Tuntas',
+                timeline: [{ date: '26 Jan', desc: 'Instrumen pengukuran', dotClass: 'final' }, { date: '27 Jan',
+                        desc: 'Pedoman iklim kerja', dotClass: 'final' }, { date: '28 Jan', desc: 'Pedoman (lanjutan)',
+                        dotClass: 'final' }, { date: '6 Feb', desc: 'Finalisasi instrumen', dotClass: 'final' },
+                    { date: '26 Feb', desc: 'Rapat RPP Penghargaan', dotClass: 'final' }, { date: '4 Mar',
+                        desc: 'FGD penghargaan', dotClass: 'final' }, { date: '15 Mar', desc: 'Bahan kognitif ergonomi',
+                        dotClass: 'final' }, { date: '27 Mar', desc: 'Revisi instrumen selesai', dotClass: 'final' }
+                    ],
+                footerIcon: 'fa-check-circle', footerText: 'Instrumen final, revisi rampung.',
+                evidenceLinks: [{ label: 'Evidence 1', url: 'https://drive.google.com/drive/folders/1OyY8kKdMGV9P0LIyvkgiAH1MnG5pgZS_' },
+                    { label: 'Evidence 2', url: 'https://bit.ly/SURVEIIKLIMKERJA2026' }
+                ],
+                cardStyle: {}, calendarEvents: {}
+            },
+            { id: 'cuti-pppk', title: 'Cuti PPPK Paruh Waktu', icon: 'fa-calendar-check', badgeClass: 'badge-emerald',
+                badgeText: 'Telah Dirilis',
+                timeline: [{ date: '29 Jan', desc: 'Rapat internal', dotClass: 'final' }, { date: '30 Jan',
+                        desc: 'Pembahasan dgn Dit. BCN', dotClass: 'final' }, { date: '3 Feb', desc: 'Perumusan pedoman',
+                        dotClass: 'final' }, { date: '5 Feb', desc: 'Rilis Surat Deputi No.648', dotClass: 'final' },
+                    { date: '10 Jun', desc: 'Flowchart pengujian kesehatan', dotClass: 'final' }
+                    ],
+                footerIcon: 'fa-paper-plane', footerText: 'Pedoman resmi dikirim ke Kanreg III.',
+                evidenceLinks: [{ label: 'Flow Chart', url: 'https://docs.google.com/document/d/1aEmFEFEzAY2Xum9R7X7LCSgRVlCBKvzu/edit' },
+                    { label: 'Buku Saku', url: 'https://docs.google.com/document/d/1TleQ8-sgj71QEaRsvuxZZoKgRTl42a52/edit' }
+                ],
+                cardStyle: {}, calendarEvents: {}
+            },
+            { id: 'fwa', title: 'Instrumen FWA', icon: 'fa-laptop-house', badgeClass: 'badge-amber',
+                badgeText: 'Penyusunan Konsep',
+                timeline: [{ date: '27 Apr', desc: 'Rapat draft konsep', dotClass: '' }, { date: '28 Apr',
+                        desc: 'Revisi draft konsep', dotClass: '' }
+                    ],
+                footerIcon: 'fa-pencil-ruler', footerText: 'Dalam penyusunan konsep awal.',
+                evidenceLinks: [{ label: 'Evidence', url: 'https://docs.google.com/document/d/1L4lwL3ZbWwWhaInBWFGG97waTReypk2o/edit' }],
+                cardStyle: {}, calendarEvents: {}
+            },
+            { id: 'konsultasi', title: 'Layanan, Pembinaan, Konsultasi', icon: 'fa-headset', badgeClass: 'badge-emerald',
+                badgeText: '0 Interaksi', fullWidth: true,
+                consultations: [
+                    { date: '23 Jan', instansi: 'BPK', channel: 'WhatsApp', topic: 'Pengulangan Cuti Besar Haji PNS',
+                        category: 'Cuti Besar & Haji' },
+                    { date: '26 Jan', instansi: 'Perpusnas', channel: 'WhatsApp', topic: 'Cuti Haji Pertama PPPK',
+                        category: 'Cuti Besar & Haji' },
+                    { date: '29 Jan', instansi: 'Pemkab Madiun', channel: 'PTSP', topic: 'Cuti PPPK Paruh Waktu',
+                        category: 'Cuti PPPK Paruh Waktu' },
+                    { date: '19 Feb', instansi: 'Pemkab Kutai Barat', channel: 'PTSP', topic: 'Hak Cuti PPPK Paruh Waktu',
+                        category: 'Cuti PPPK Paruh Waktu' },
+                    { date: '26 Feb', instansi: 'Pemkab Kutai Barat', channel: 'WhatsApp',
+                        topic: 'Cuti Tahunan & Tugas Belajar', category: 'Cuti Tahunan' },
+                    { date: '11 Mar', instansi: 'BIG', channel: 'Zoom', topic: 'Tukin & Cuti Besar',
+                        category: 'Tunjangan Kinerja' },
+                    { date: '12 Mar', instansi: 'Pemkot Kupang', channel: 'PTSP', topic: 'Cuti Sakit PPPK',
+                        category: 'Cuti Sakit' },
+                    { date: '23 Apr', instansi: 'Pemkot Cilegon', channel: 'PTSP', topic: 'Cuti Haji & Mendampingi',
+                        category: 'Cuti Besar & Haji' },
+                    { date: '28 Apr', instansi: 'BIG', channel: 'WhatsApp', topic: 'Mekanisme Cuti Besar & Tukin',
+                        category: 'Tunjangan Kinerja' },
+                    { date: '30 Apr', instansi: 'BKPSDM Bekasi', channel: 'PTSP', topic: 'Cuti Haji, Anak Sakit',
+                        category: 'Cuti Besar & Haji' },
+                    { date: '7 Mei', instansi: 'Kanreg III BKN', channel: 'Surat', topic: 'Cuti PPPK Paruh Waktu',
+                        category: 'Cuti PPPK Paruh Waktu' },
+                    { date: '12 Mei', instansi: 'LKPP', channel: 'WhatsApp', topic: 'Cuti Sakit & TPK',
+                        category: 'Cuti Sakit' },
+                    { date: '12 Mei', instansi: 'Kemendes PDT', channel: 'PTSP', topic: 'Cuti Sakit Meningitis',
+                        category: 'Cuti Sakit' },
+                    { date: '13 Mei', instansi: 'Pemprov Jabar', channel: 'PTSP', topic: 'Cuti Sakit 60 Hari',
+                        category: 'Cuti Sakit' },
+                    { date: '20 Mei', instansi: 'BKPSDM Aceh Besar', channel: 'Surat', topic: 'Cuti PPPK',
+                        category: 'Cuti Besar & Haji' },
+                    { date: '21 Mei', instansi: 'Pemkab Pakpak Bharat', channel: 'PTSP', topic: 'TPK & Biaya',
+                        category: 'Cuti Sakit' },
+                    { date: '25 Mei', instansi: 'Kemendag', channel: 'WhatsApp', topic: 'Cuti ½ Hari',
+                        category: 'Cuti Tahunan' },
+                    { date: '25 Mei', instansi: 'Pemkab Wajo', channel: 'WhatsApp', topic: 'Cuti Tahunan PPPK Guru',
+                        category: 'Cuti Tahunan' },
+                    { date: '2 Jun', instansi: 'BKPSDM Karawang', channel: 'Surat', topic: 'Cuti Haji PPPK',
+                        category: 'Cuti Besar & Haji' },
+                    { date: '3 Jun', instansi: 'Pemkot Cilegon', channel: 'WhatsApp', topic: 'Dasar Hukum Cuti PPPK',
+                        category: 'Cuti PPPK' },
+                    { date: '5 Jun', instansi: 'Kemenag', channel: 'WhatsApp', topic: 'Cuti Haji PPPK',
+                        category: 'Cuti Besar & Haji' },
+                    { date: '12 Jun', instansi: 'BRIN', channel: 'Email', topic: 'CLTN Tugas Belajar',
+                    category: 'CLTN' },
+                    { date: '17 Jun', instansi: 'Pengadilan Militer', channel: 'WhatsApp', topic: 'Penangguhan Cuti',
+                        category: 'Cuti Tahunan' },
+                    { date: '17 Jun', instansi: 'Perpusnas', channel: 'WhatsApp', topic: 'Cuti Tahunan Tugas Belajar',
+                        category: 'Cuti Tahunan' }
+                ],
+                footerIcon: 'fa-chart-pie', footerText: 'Total 24 konsultasi.',
+                evidenceLinks: [{ label: 'Laporan Konsultasi', url: 'https://docs.google.com/document/d/1Aj0xLc20eBCSrJBwrMKP5YDcR6dFr1SE/edit' },
+                    { label: 'Surat Jawaban', url: 'https://drive.google.com/drive/folders/1PfsnSkkgDUHmE1RvM8h2LSn4VsDaP6e8' }
+                ],
+                cardStyle: {}, calendarEvents: {}
+            },
+            { id: 'fasilitas-rumah', title: 'Fasilitas Rumah ASN', icon: 'fa-home', badgeClass: 'badge-emerald',
+                badgeText: 'Rekapitulasi Tersaji',
+                timeline: [{ date: '27 Mar', desc: 'Rapat internal', dotClass: 'final' }, { date: '31 Mar',
+                        desc: 'Koordinasi KPKP', dotClass: 'final' }, { date: '1 Apr', desc: 'Permohonan data',
+                        dotClass: 'final' }, { date: '9 Apr', desc: 'Koordinasi kembali', dotClass: 'final' },
+                    { date: '10 Apr', desc: 'Pengolahan data', dotClass: 'final' }, { date: '14 Apr',
+                        desc: 'Penyajian rekapitulasi', dotClass: 'final' }, { date: '5 Jun', desc: 'Rapat update',
+                        dotClass: '' }
+                    ],
+                footerIcon: 'fa-table', footerText: 'Rekapitulasi data kepemilikan rumah.',
+                evidenceLinks: [{ label: 'Evidence', url: 'https://www.canva.com/design/DAHI262RI5g/edit' }],
+                cardStyle: {}, calendarEvents: {}
+            },
+            { id: 'pengembangan-diri', title: 'Pengembangan Diri', icon: 'fa-seedling', badgeClass: 'badge-amber',
+                badgeText: 'Usulan Terkirim',
+                timeline: [{ date: '30 Apr', desc: 'Diusulkan ke Prospera', dotClass: '' }],
+                footerIcon: 'fa-paper-plane', footerText: 'Menunggu respons.',
+                evidenceLinks: [{ label: 'Evidence', url: 'https://docs.google.com/spreadsheets/d/1lmaHuFz5YqUDV4u7Wsz6OuIHEH-c9V7xhRVlcZDKAOw/edit' }],
+                cardStyle: {}, calendarEvents: {}
+            },
+            { id: 'rencana-depan', title: 'Rencana Tahun Depan', icon: 'fa-calendar-star', badgeClass: 'badge-amber',
+                badgeText: 'Proyeksi Strategis', fullWidth: true,
+                rencanaItems: [
+                    'Sosialisasi updating data perumahan via SIASN kepada ASN secara nasional',
+                    'Pengukuran iklim kerja secara nasional',
+                    'Pengukuran efektivitas FWA secara nasional',
+                    'Finalisasi pedoman cuti PPPK dan PPPK paruh waktu'
+                ],
+                footerIcon: 'fa-rocket', footerText: 'Inisiatif strategis tata kelola ASN.',
+                evidenceLinks: [], cardStyle: {}, calendarEvents: {}
+            }
+        ];
+
+        const defaultTheme = {
+            bg: '#050A14', headingColor: '#FFF8E7', bodyColor: '#FFF8E7', subtitleColor: '#F7EFE2', badgeTextColor: '#FFF8E7',
+            headingFont: "'Cormorant Garamond', serif", bodyFont: "'Inter', sans-serif",
+            animationStyle: 'shimmer', particleStyle: 'both',
+            fsKicker: '0.75rem', fsMainTitle: '3.2rem', fsSubtitle: '1.05rem', fsCardTitle: '1.8rem', fsBadge: '0.7rem',
+            fsBody: '0.85rem', fsFooter: '0.75rem'
+        };
+
+        // ─── STATE ────────────────────────────────────────────────────────────
+        let dashboardData;
+        let stored = localStorage.getItem('dashboardData');
+        if (stored) {
+            try {
+                let parsed = JSON.parse(stored);
+                if (Array.isArray(parsed) && parsed.length > 0) dashboardData = parsed;
+                else dashboardData = JSON.parse(JSON.stringify(defaultData));
+            } catch (e) { dashboardData = JSON.parse(JSON.stringify(defaultData)); }
+        } else {
+            dashboardData = JSON.parse(JSON.stringify(defaultData));
+        }
+        if (!dashboardData || dashboardData.length === 0) {
+            dashboardData = JSON.parse(JSON.stringify(defaultData));
+        }
+
+        let theme = JSON.parse(localStorage.getItem('dashboardTheme')) || { ...defaultTheme };
+        let headerData = JSON.parse(localStorage.getItem('headerData')) || {
+            kicker: 'Progress Report',
+            mainTitle: 'Tim Fasilitas, Lingkungan Kerja dan Pengembangan Diri',
+            periode: 'Januari – Juni 2026',
+            update: '19 Juni 2026'
+        };
+        let calState = JSON.parse(localStorage.getItem('calState')) || {};
+        let globalCalState = JSON.parse(localStorage.getItem('globalCalState')) || { year: 2026, month: 5, minimized: false };
+        let undoStack = JSON.parse(localStorage.getItem('undoStack')) || [];
+        const MAX_UNDO = 30;
+        let currentSnapshot = null;
+        let historySnapshots = JSON.parse(localStorage.getItem('historySnapshots')) || [];
+        const MAX_SNAPSHOTS = 30;
+
+        // ─── Helpers ──────────────────────────────────────────────────────────
+        function parseDateToStr(dateStr) {
+            if (dateStr.includes('-')) return dateStr;
+            const months = { Jan: '01', Feb: '02', Mar: '03', Apr: '04', Mei: '05', Jun: '06', Jul: '07', Agt: '08', Sep: '09',
+                Okt: '10', Nov: '11', Des: '12' };
+            const parts = dateStr.trim().split(' ');
+            if (parts.length === 2) {
+                const day = String(parseInt(parts[0])).padStart(2, '0');
+                const mon = months[parts[1]] || '01';
+                return `2026-${mon}-${day}`;
+            }
+            return dateStr;
+        }
+
+        function formatDateDisplay(dateStr) {
+            if (dateStr.includes('-')) {
+                const d = new Date(dateStr + 'T00:00:00');
+                if (!isNaN(d)) {
+                    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
+                    return `${d.getDate()} ${months[d.getMonth()]}`;
+                }
+            }
+            return dateStr;
+        }
+
+        function normalizeEventData(value) {
+            if (typeof value === 'string') return { text: value, link: '' };
+            if (value && typeof value === 'object' && value.text !== undefined) return { text: value.text || '', link: value
+                    .link || '' };
+            return { text: '', link: '' };
+        }
+
+        function getConsultationDisplay(card) {
+            if (!card.consultations) return null;
+            const count = card.consultations.length;
+            return { badgeText: `${count} Interaksi`, footerText: `Total ${count} konsultasi.` };
+        }
+
+        function getCardTextColor(cardId) {
+            const card = dashboardData.find(c => c.id === cardId);
+            if (card && card.cardStyle && card.cardStyle.textColor) return card.cardStyle.textColor;
+            return theme.bodyColor || '#FFF8E7';
+        }
+
+        function saveAll() {
+            if (currentSnapshot) return;
+            localStorage.setItem('dashboardData', JSON.stringify(dashboardData));
+            localStorage.setItem('dashboardTheme', JSON.stringify(theme));
+            localStorage.setItem('headerData', JSON.stringify(headerData));
+            localStorage.setItem('calState', JSON.stringify(calState));
+            localStorage.setItem('globalCalState', JSON.stringify(globalCalState));
+            saveSnapshot();
+            const ind = document.getElementById('globalSaveIndicator');
+            ind.classList.add('show');
+            clearTimeout(ind._hideTimer);
+            ind._hideTimer = setTimeout(() => ind.classList.remove('show'), 1200);
+        }
+
+        function getCalState(cardId) {
+            if (!calState[cardId]) calState[cardId] = { year: 2026, month: 5, minimized: false };
+            return calState[cardId];
+        }
+
+        function saveSnapshot() {
+            const snapshot = {
+                timestamp: new Date().toISOString(),
+                data: JSON.parse(JSON.stringify(dashboardData)),
+                headerData: JSON.parse(JSON.stringify(headerData)),
+                calState: JSON.parse(JSON.stringify(calState)),
+                globalCalState: JSON.parse(JSON.stringify(globalCalState))
+            };
+            historySnapshots.push(snapshot);
+            if (historySnapshots.length > MAX_SNAPSHOTS) historySnapshots.shift();
+            localStorage.setItem('historySnapshots', JSON.stringify(historySnapshots));
+        }
+
+        function loadSnapshot(index) {
+            const snap = historySnapshots[index];
+            if (!snap) return;
+            currentSnapshot = snap;
+            dashboardData = snap.data;
+            headerData = snap.headerData;
+            calState = snap.calState;
+            globalCalState = snap.globalCalState;
+            renderAllCards();
+            document.getElementById('historyBanner').classList.add('active');
+            document.getElementById('historyTimestamp').textContent = new Date(snap.timestamp).toLocaleString('id-ID');
+            document.getElementById('exitHistoryBtn').style.display = 'inline-flex';
+            disableEditingUI(true);
+            closeHistoryPanel();
+            showUndoToast('📜 Menampilkan snapshot dari ' + new Date(snap.timestamp).toLocaleString('id-ID'));
+        }
+
+        function exitHistoryMode() {
+            if (!currentSnapshot) return;
+            currentSnapshot = null;
+            let stored = localStorage.getItem('dashboardData');
+            if (stored) {
+                try {
+                    let parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length > 0) dashboardData = parsed;
+                    else dashboardData = JSON.parse(JSON.stringify(defaultData));
+                } catch (e) { dashboardData = JSON.parse(JSON.stringify(defaultData)); }
+            } else {
+                dashboardData = JSON.parse(JSON.stringify(defaultData));
+            }
+            headerData = JSON.parse(localStorage.getItem('headerData')) || {
+                kicker: 'Progress Report',
+                mainTitle: 'Tim Fasilitas, Lingkungan Kerja dan Pengembangan Diri',
+                periode: 'Januari – Juni 2026',
+                update: '19 Juni 2026'
+            };
+            calState = JSON.parse(localStorage.getItem('calState')) || {};
+            globalCalState = JSON.parse(localStorage.getItem('globalCalState')) || { year: 2026, month: 5, minimized: false };
+            document.getElementById('historyBanner').classList.remove('active');
+            document.getElementById('exitHistoryBtn').style.display = 'none';
+            disableEditingUI(false);
+            renderAllCards();
+            showUndoToast('✅ Kembali ke data terbaru.');
+        }
+
+        function disableEditingUI(disabled) {
+            document.querySelectorAll('.edit-btn, .move-btn, .undo-style-btn, .btn-rose, .btn-emerald, .btn-history, .btn').forEach(
+                el => {
+                    if (el.id === 'exitHistoryBtn' || el.id === 'undoBtn' || el.classList.contains('btn-history') ||
+                        el.classList.contains('btn-exit-history') || el.id === 'lockToggle') return;
+                    if (disabled) {
+                        el.style.display = 'none';
+                    } else {
+                        el.style.display = '';
+                    }
+                });
+            if (disabled) {
+                document.querySelectorAll('.action-buttons .btn:not(#exitHistoryBtn):not(.btn-history):not(#lockToggle)')
+                    .forEach(el => {
+                        if (el.id === 'undoBtn') return;
+                        el.style.display = 'none';
+                    });
+                document.getElementById('exitHistoryBtn').style.display = 'inline-flex';
+            } else {
+                document.querySelectorAll('.action-buttons .btn').forEach(el => {
+                    el.style.display = '';
+                });
+                document.getElementById('exitHistoryBtn').style.display = 'none';
+            }
+            document.getElementById('headerEditArea').style.display = 'none';
+        }
+
+        // ─── Undo ─────────────────────────────────────────────────────────────
+        function pushUndo(action) {
+            undoStack.push(action);
+            if (undoStack.length > MAX_UNDO) undoStack.shift();
+            localStorage.setItem('undoStack', JSON.stringify(undoStack));
+            updateUndoUI();
+        }
+
+        function popUndo() {
+            if (undoStack.length === 0) return null;
+            const action = undoStack.pop();
+            localStorage.setItem('undoStack', JSON.stringify(undoStack));
+            updateUndoUI();
+            return action;
+        }
+
+        function updateUndoUI() {
+            const count = undoStack.length;
+            const btn = document.getElementById('undoBtn');
+            const span = document.getElementById('undoCount');
+            const ind = document.getElementById('undoIndicator');
+            if (count > 0) { span.textContent = `(${count})`;
+                ind.classList.add('show');
+                btn.style.opacity = '1'; } else { span.textContent = '';
+                ind.classList.remove('show');
+                btn.style.opacity = '0.5'; }
+        }
+
+        function showUndoToast(msg) {
+            const toast = document.getElementById('undoToast');
+            document.getElementById('undoToastMsg').innerHTML = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._hideTimer);
+            toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 5000);
+        }
+
+        function dismissUndoToast() { document.getElementById('undoToast').classList.remove('show'); }
+
+        window.undoLastAction = function() {
+            checkPassword(() => {
+                if (undoStack.length === 0) { showUndoToast('ℹ️ Tidak ada aksi.'); return; }
+                const action = popUndo();
+                if (!action) return;
+                switch (action.type) {
+                    case 'deleteCard': { const c = action.data;
+                        const idx = c._originalIndex !== undefined ? Math.min(c._originalIndex, dashboardData
+                            .length) : dashboardData.length;
+                        dashboardData.splice(idx, 0, c);
+                        saveAll();
+                        renderAllCards();
+                        showUndoToast('✅ RHK <strong>' + c.title + '</strong> dipulihkan.');
+                        break; }
+                    case 'deleteTimeline': { const c = dashboardData.find(c => c.id === action.cardId); if (c && c
+                            .timeline) { const idx = Math.min(action.index, c.timeline.length);
+                            c.timeline.splice(idx, 0, action.data);
+                            syncTimelineToCalendar(action.cardId);
+                            saveAll();
+                            renderAllCards();
+                            showUndoToast('✅ Milestone dipulihkan.'); } break; }
+                    case 'deleteConsultation': { const c = dashboardData.find(c => c.id === action.cardId); if (c && c
+                            .consultations) { const idx = Math.min(action.index, c.consultations.length);
+                            c.consultations.splice(idx, 0, action.data);
+                            const d = getConsultationDisplay(c); if (d) { c.badgeText = d.badgeText;
+                                c.footerText = d.footerText; }
+                            saveAll();
+                            renderAllCards();
+                            showUndoToast('✅ Konsultasi dipulihkan.'); } break; }
+                    case 'deleteRencana': { const c = dashboardData.find(c => c.id === action.cardId); if (c && c
+                            .rencanaItems) { const idx = Math.min(action.index, c.rencanaItems.length);
+                            c.rencanaItems.splice(idx, 0, action.data);
+                            saveAll();
+                            renderAllCards();
+                            showUndoToast('✅ Item proyeksi dipulihkan.'); } break; }
+                    case 'deleteEvidence': { const c = dashboardData.find(c => c.id === action.cardId); if (c && c
+                            .evidenceLinks) { const idx = Math.min(action.index, c.evidenceLinks.length);
+                            c.evidenceLinks.splice(idx, 0, action.data);
+                            saveAll();
+                            renderAllCards();
+                            showUndoToast('✅ Evidence dipulihkan.'); } break; }
+                    case 'deleteCalendarEvent': { const c = dashboardData.find(c => c.id === action.cardId); if (c) { if (!
+                                c.calendarEvents) c.calendarEvents = {};
+                            c.calendarEvents[action.dateStr] = action.data;
+                            syncCalendarToTimeline(action.cardId, action.dateStr, action.data.text);
+                            saveAll();
+                            renderAllCards();
+                            showUndoToast('✅ Agenda tanggal <strong>' + action.dateStr + '</strong> dipulihkan.'); } break; }
+                    default:
+                        showUndoToast('⚠️ Aksi tidak dikenal.');
+                }
+            });
+        };
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 3.  SINKRONISASI TIMELINE ↔ CALENDAR
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function syncTimelineToCalendar(cardId) {
+            const card = dashboardData.find(c => c.id === cardId);
+            if (!card || !card.timeline) return;
+            if (!card.calendarEvents) card.calendarEvents = {};
+            const keysToRemove = [];
+            for (const [dateStr, ev] of Object.entries(card.calendarEvents)) {
+                const norm = normalizeEventData(ev);
+                if (norm.text && norm.text.startsWith('📌 ')) {
+                    keysToRemove.push(dateStr);
+                }
+            }
+            keysToRemove.forEach(k => delete card.calendarEvents[k]);
+            card.timeline.forEach(item => {
+                if (item.date && item.desc) {
+                    const dateStr = parseDateToStr(item.date);
+                    if (dateStr) {
+                        card.calendarEvents[dateStr] = { text: '📌 ' + item.desc, link: '' };
+                    }
+                }
+            });
+            for (const [k, v] of Object.entries(card.calendarEvents)) {
+                const norm = normalizeEventData(v);
+                if (!norm.text || norm.text.trim() === '') {
+                    delete card.calendarEvents[k];
+                }
+            }
+            saveAll();
+        }
+
+        function syncCalendarToTimeline(cardId, dateStr, text) {
+            const card = dashboardData.find(c => c.id === cardId);
+            if (!card || !card.timeline) return;
+            if (!text || text.trim() === '') return;
+            const formatted = formatDateDisplay(dateStr);
+            const existing = card.timeline.find(t => t.date === formatted);
+            if (existing) {
+                if (existing.desc !== text) {
+                    existing.desc = text;
+                    saveAll();
+                }
+            } else {
+                card.timeline.push({ date: formatted, desc: text, dotClass: '' });
+                card.timeline.sort((a, b) => {
+                    const da = parseDateToStr(a.date),
+                        db = parseDateToStr(b.date);
+                    return da.localeCompare(db);
+                });
+                saveAll();
+            }
+            syncTimelineToCalendar(cardId);
+        }
+
+        function updateTimelineFromCalendar(cardId, dateStr, newText) {
+            const card = dashboardData.find(c => c.id === cardId);
+            if (!card || !card.timeline) return;
+            const formatted = formatDateDisplay(dateStr);
+            const existing = card.timeline.find(t => t.date === formatted);
+            if (existing) {
+                if (newText.trim() === '') {
+                    const idx = card.timeline.indexOf(existing);
+                    if (idx > -1) card.timeline.splice(idx, 1);
+                } else {
+                    existing.desc = newText;
+                }
+            } else if (newText.trim() !== '') {
+                card.timeline.push({ date: formatted, desc: newText, dotClass: '' });
+                card.timeline.sort((a, b) => {
+                    const da = parseDateToStr(a.date),
+                        db = parseDateToStr(b.date);
+                    return da.localeCompare(db);
+                });
+            }
+            syncTimelineToCalendar(cardId);
+            saveAll();
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 4.  THEME & HEADER
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function applyTheme() {
+            const r = document.documentElement;
+            r.style.setProperty('--bg-deep', theme.bg);
+            r.style.setProperty('--heading-color', theme.headingColor);
+            r.style.setProperty('--body-color', theme.bodyColor);
+            r.style.setProperty('--subtitle-color', theme.subtitleColor);
+            r.style.setProperty('--badge-text-color', theme.badgeTextColor);
+            r.style.setProperty('--font-heading', theme.headingFont);
+            r.style.setProperty('--font-body', theme.bodyFont);
+            r.style.setProperty('--fs-kicker', theme.fsKicker || '0.75rem');
+            r.style.setProperty('--fs-main-title', theme.fsMainTitle || '3.2rem');
+            r.style.setProperty('--fs-subtitle', theme.fsSubtitle || '1.05rem');
+            r.style.setProperty('--fs-card-title', theme.fsCardTitle || '1.8rem');
+            r.style.setProperty('--fs-badge', theme.fsBadge || '0.7rem');
+            r.style.setProperty('--fs-body', theme.fsBody || '0.85rem');
+            r.style.setProperty('--fs-footer', theme.fsFooter || '0.75rem');
+            document.body.style.background = theme.bg;
+            document.body.style.color = theme.bodyColor;
+
+            document.getElementById('bgColor').value = theme.bg;
+            document.getElementById('headingColor').value = theme.headingColor;
+            document.getElementById('bodyColor').value = theme.bodyColor;
+            document.getElementById('subtitleColor').value = theme.subtitleColor;
+            document.getElementById('badgeTextColor').value = theme.badgeTextColor;
+            document.getElementById('headingFont').value = theme.headingFont;
+            document.getElementById('bodyFont').value = theme.bodyFont;
+            document.getElementById('animationStyle').value = theme.animationStyle;
+            document.getElementById('particleStyle').value = theme.particleStyle;
+            document.getElementById('fsKicker').value = theme.fsKicker || '0.75rem';
+            document.getElementById('fsMainTitle').value = theme.fsMainTitle || '3.2rem';
+            document.getElementById('fsSubtitle').value = theme.fsSubtitle || '1.05rem';
+            document.getElementById('fsCardTitle').value = theme.fsCardTitle || '1.8rem';
+            document.getElementById('fsBadge').value = theme.fsBadge || '0.7rem';
+            document.getElementById('fsBody').value = theme.fsBody || '0.85rem';
+            document.getElementById('fsFooter').value = theme.fsFooter || '0.75rem';
+
+            document.querySelectorAll('.evidence-link').forEach(link => {
+                link.classList.remove('shimmer', 'pulse-anim');
+                if (theme.animationStyle !== 'none') link.classList.add(theme.animationStyle === 'shimmer' ?
+                    'shimmer' : 'pulse-anim');
+            });
+
+            const particlesEl = document.getElementById('particles');
+            const starsEl = document.getElementById('starsContainer');
+            particlesEl.classList.remove('show');
+            starsEl.classList.remove('show');
+            document.body.classList.remove('grid-bg');
+            starsEl.innerHTML = '';
+            switch (theme.particleStyle) {
+                case 'both':
+                    particlesEl.classList.add('show');
+                    document.body.classList.add('grid-bg');
+                    break;
+                case 'particles':
+                    particlesEl.classList.add('show');
+                    break;
+                case 'grid':
+                    document.body.classList.add('grid-bg');
+                    break;
+                case 'stars':
+                    starsEl.classList.add('show');
+                    for (let i = 0; i < 60; i++) { const star = document.createElement('div');
+                        star.className = 'star';
+                        star.style.left = Math.random() * 100 + '%';
+                        star.style.top = Math.random() * 100 + '%';
+                        star.style.animationDelay = Math.random() * 3 + 's';
+                        starsEl.appendChild(star); }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function applyHeader() {
+            document.getElementById('kickerText').innerText = headerData.kicker;
+            document.getElementById('mainTitle').innerText = headerData.mainTitle;
+            document.getElementById('periodeText').innerText = headerData.periode;
+            document.getElementById('updateDate').innerText = headerData.update;
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 5.  RENDER
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function getCardInlineStyle(card) {
+            if (!card.cardStyle || Object.keys(card.cardStyle).length === 0) return '';
+            const s = card.cardStyle;
+            let style = '';
+            if (s.bg) style += `--glass-bg:${s.bg}; `;
+            if (s.textColor) style += `--body-color:${s.textColor}; --heading-color:${s.textColor}; `;
+            if (s.borderColor) style += `--glass-border:${s.borderColor}; `;
+            return style;
+        }
+
+        function renderTimelineNormal(timeline, cardId) {
+            return timeline.map((m, idx) =>
+                `<div class="milestone" onclick="navigateToDate('${cardId}','${m.date}')" title="Klik untuk lihat di kalender">
+              <div class="dot ${m.dotClass || ''}"></div>
+              <div class="date">${m.date}</div>
+              <div class="desc">${m.desc}</div>
+            </div>`
+            ).join('');
+        }
+
+        function renderEvidenceNormal(links) {
+            let animClass = theme.animationStyle !== 'none' ? (theme.animationStyle === 'shimmer' ? 'shimmer' :
+                'pulse-anim') : '';
+            return links.map(l =>
+                `<a href="${l.url}" target="_blank" class="evidence-link ${animClass}"><i class="fas fa-external-link-alt"></i> ${l.label}</a>`
+            ).join('');
+        }
+
+        function renderMiniCalendar(cardId, year, month) {
+            const state = getCalState(cardId);
+            if (year !== undefined && month !== undefined) { state.year = year;
+                state.month = month; }
+            const y = state.year,
+                m = state.month;
+            const date = new Date(y, m, 1);
+            const monthName = date.toLocaleString('id-ID', { month: 'long' });
+            const firstDayIndex = (date.getDay() + 6) % 7;
+            const totalDays = new Date(y, m + 1, 0).getDate();
+            const minimized = state.minimized || false;
+            const calBodyStyle = minimized ? 'display:none;' : 'display:block;';
+            const chevronStyle = minimized ? 'transform:rotate(0deg);' : 'transform:rotate(180deg);';
+
+            const card = dashboardData.find(c => c.id === cardId);
+            const events = (card && card.calendarEvents) || {};
+            const evLinks = (card && card.evidenceLinks) || [];
+
+            let html = `
+            <div class="mini-calendar" data-card-id="${cardId}" data-year="${y}" data-month="${m}">
+              <div class="cal-header" onclick="toggleCalendarBody('${cardId}')">
+                <span class="cal-header-title">
+                  <i class="fa-regular fa-calendar-days"></i> Kalender: ${monthName} ${y}
+                  <i class="fas fa-chevron-up cal-chevron" id="cal-chevron-${cardId}" style="${chevronStyle}"></i>
+                </span>
+                <div onclick="event.stopPropagation();">
+                  <button class="cal-nav-btn" onclick="changeMonth('${cardId}', -1)"><i class="fas fa-chevron-left"></i></button>
+                  <button class="cal-nav-btn" onclick="changeMonth('${cardId}', 1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+              </div>
+
+              <div id="cal-body-wrapper-${cardId}" style="${calBodyStyle}">
+                <div class="cal-header-days"><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div><div>Min</div></div>
+                <div class="cal-grid">`;
+
+            for (let i = 0; i < firstDayIndex; i++) html += `<div style="height:28px;"></div>`;
+
+            for (let day = 1; day <= totalDays; day++) {
+                const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+                const rawEvent = events[dateStr];
+                const eventData = rawEvent ? normalizeEventData(rawEvent) : null;
+                const hasEvent = !!(eventData && eventData.text);
+                const hasLink = !!(eventData && eventData.link);
+                const cls = 'cal-day' + (hasEvent ? ' has-event' : '') + (hasLink ? ' has-link' : '');
+                const tooltip = hasEvent ? eventData.text + (hasLink ? ' [🔗]' : '') : '';
+                html += `
+                <div class="${cls}" data-card-id="${cardId}" data-date="${dateStr}" title="${tooltip.replace(/"/g,'&quot;')}" onclick="clickCalendarDay('${cardId}','${dateStr}')">
+                  ${day}
+                </div>`;
+            }
+
+            html += `
+                </div>
+
+                <div class="cal-details" id="cal-details-${cardId}">
+                  <div class="cal-details-title">
+                    <span id="cal-date-title-${cardId}"></span>
+                    <div style="display:flex; gap:0.3rem; flex-wrap:wrap;">
+                      <button class="btn" onclick="saveDayEvent('${cardId}')" style="font-size:0.65rem; padding:0.2rem 0.6rem; background:rgba(46,204,113,0.12); border-color:var(--emerald); color:var(--emerald);"><i class="fas fa-save"></i> Simpan</button>
+                      <button class="btn" onclick="cancelDayEvent('${cardId}')" style="font-size:0.65rem; padding:0.2rem 0.6rem; background:rgba(255,255,255,0.03); border-color:rgba(255,255,255,0.15); color:#fff;"><i class="fas fa-ban"></i></button>
+                      <button class="btn btn-rose" onclick="deleteDayEvent('${cardId}')" style="font-size:0.65rem; padding:0.2rem 0.6rem;"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                  </div>
+                  <textarea class="cal-textarea" id="cal-text-input-${cardId}" rows="2" placeholder="Tulis agenda perkembangan tugas RHK pada tanggal ini..."></textarea>
+                  <input class="cal-link-input" id="cal-link-input-${cardId}" type="text" placeholder="🔗 Tautan evidence (contoh: https://drive.google.com/...)" />
+
+                  <div class="cal-evidence-area" id="cal-evidence-area-${cardId}">
+                    <div style="font-size:0.65rem; color:var(--gold-light); margin-bottom:0.3rem; font-weight:500;">📎 Evidence terkait tanggal ini:</div>
+                    <div id="cal-evidence-list-${cardId}" style="display:flex; flex-wrap:wrap; gap:0.2rem; margin-bottom:0.3rem;">
+                      ${evLinks.map((l,i) => `<span class="evidence-tag"><i class="fas fa-link"></i> ${l.label} <i class="fas fa-times" onclick="removeEvidenceFromCalendar('${cardId}',${i})" title="Hapus evidence"></i></span>`).join('')}
+                    </div>
+                    <div style="display:flex; gap:0.3rem; align-items:center; flex-wrap:wrap;">
+                      <input type="text" id="cal-evidence-label-${cardId}" placeholder="Label" style="flex:1; min-width:80px; background:rgba(0,0,0,0.3); border:1px solid rgba(212,175,55,0.15); border-radius:6px; padding:0.3rem 0.6rem; color:var(--latte); font-size:0.7rem;">
+                      <input type="text" id="cal-evidence-url-${cardId}" placeholder="URL" style="flex:2; min-width:120px; background:rgba(0,0,0,0.3); border:1px solid rgba(212,175,55,0.15); border-radius:6px; padding:0.3rem 0.6rem; color:var(--latte); font-size:0.7rem;">
+                      <button class="btn" onclick="addEvidenceFromCalendar('${cardId}')" style="font-size:0.6rem; padding:0.2rem 0.6rem;"><i class="fas fa-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+            return html;
+        }
+
+        function renderCardNormal(card, index) {
+            let displayBadgeText = card.badgeText,
+                displayFooterText = card.footerText;
+            if (card.consultations) { const d = getConsultationDisplay(card); if (d) { displayBadgeText = d.badgeText;
+                    displayFooterText = d.footerText; } }
+            const full = card.fullWidth ? ' full-width' : '';
+            const styleAttr = getCardInlineStyle(card) ? `style="${getCardInlineStyle(card)}"` : '';
+            const number = index + 1;
+            const hasCustom = card.cardStyle && Object.keys(card.cardStyle).length > 0;
+            const state = getCalState(card.id);
+
+            let body = '';
+            if (card.consultations) {
+                body =
+                    `<div class="consultation-list">${card.consultations.map(c => `<div class="consult-item"><div class="consult-date">${c.date}</div><div class="consult-body"><div class="consult-instansi">${c.instansi} <span class="consult-channel">${c.channel}</span></div><div class="consult-topic">${c.topic}</div><div class="consult-category">${c.category}</div></div></div>`).join('')}</div>`;
+            } else if (card.rencanaItems) {
+                body =
+                    `<div class="illustration" style="text-align:center;font-size:2.5rem;color:var(--gold);opacity:0.3;margin:0.5rem 0;"><i class="fas fa-crown"></i></div><div class="rencana-list">${card.rencanaItems.map(item => `<div class="rencana-item"><i class="fas fa-circle-notch"></i><span>${item}</span></div>`).join('')}</div>`;
+            } else {
+                body = `<div class="timeline-horizontal">${renderTimelineNormal(card.timeline, card.id)}</div>`;
+            }
+
+            const calHtml = renderMiniCalendar(card.id, state.year, state.month);
+
+            return `<div class="card${full}" data-card-id="${card.id}" ${styleAttr}>
+              <div class="card-header" onclick="toggleAccordion('${card.id}', event)" style="cursor:pointer; user-select:none; display:flex; align-items:flex-start; gap:1rem;">
+                <div class="card-icon"><i class="fas ${card.icon}"></i></div>
+                <div style="flex:1; display:flex; flex-direction:column; gap:0.3rem;">
+                  <div class="card-title" style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+                    <span>${number}. ${card.title}</span>
+                    <i class="fas fa-chevron-down" id="chevron-${card.id}" style="font-size:0.8rem; color:var(--gold); transition:transform 0.3s;"></i>
+                  </div>
+                  <div><span class="status-badge ${card.badgeClass}">${displayBadgeText}</span></div>
+                </div>
+                <div style="display:flex; gap:0.2rem; align-items:center; flex-shrink:0;" onclick="event.stopPropagation();">
+                  ${hasCustom ? `<button class="undo-style-btn" onclick="undoCardStyle('${card.id}')" title="Reset Gaya"><i class="fas fa-undo-alt"></i></button>` : ''}
+                  <button class="move-btn" onclick="moveCard('${card.id}', -1)" title="Ke Atas"><i class="fas fa-chevron-up"></i></button>
+                  <button class="move-btn" onclick="moveCard('${card.id}', 1)" title="Ke Bawah"><i class="fas fa-chevron-down"></i></button>
+                  <button class="edit-btn" onclick="toggleEdit('${card.id}')" title="Edit Data"><i class="fas fa-pen"></i></button>
+                  <button class="edit-btn" onclick="deleteCard('${card.id}')" style="color:var(--rose);" title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
+
+              <div id="details-wrapper-${card.id}" class="card-details-wrapper" style="margin-top:1rem; border-top:1px solid rgba(212,175,55,0.12); padding-top:0.5rem;">
+                ${body}
+                ${calHtml}
+                <div class="card-footer-note">
+                  <i class="fas ${card.footerIcon}"></i> <span>${displayFooterText}</span>
+                  <div style="margin-left:auto; display:inline-flex; flex-wrap:wrap; gap:0.2rem;">${renderEvidenceNormal(card.evidenceLinks)}</div>
+                </div>
+              </div>
+            </div>`;
+        }
+
+        function renderCardEdit(card) {
+            let displayBadgeText = card.badgeText,
+                displayFooterText = card.footerText;
+            let isConsultation = false;
+            if (card.consultations) { isConsultation = true; const d = getConsultationDisplay(card); if (d) { displayBadgeText =
+                        d.badgeText;
+                    displayFooterText = d.footerText; } }
+            const full = card.fullWidth ? ' full-width' : '';
+            const style = card.cardStyle || {};
+            let body = '';
+            if (card.consultations) body = renderConsultationEdit(card.consultations, card.id);
+            else if (card.rencanaItems) body = renderRencanaEdit(card.rencanaItems, card.id);
+            else body = renderTimelineEdit(card.timeline, card.id);
+
+            const badgeInput = isConsultation ?
+                `<input value="${displayBadgeText}" style="width:140px; background:rgba(0,0,0,0.3);" readonly disabled>` :
+                `<input value="${card.badgeText}" style="width:140px;" id="edit-badge-${card.id}" placeholder="Status">`;
+            const footerInput = isConsultation ?
+                `<input value="${displayFooterText}" style="flex:1; min-width:150px; background:rgba(0,0,0,0.3);" readonly disabled>` :
+                `<input value="${card.footerText}" style="flex:1; min-width:150px;" id="edit-footer-${card.id}">`;
+
+            return `<div class="card edit-form${full}" data-card-id="${card.id}" style="${getCardInlineStyle(card)}">
+              <div class="card-header" style="flex-direction:column; gap:0.6rem; align-items:stretch;">
+                <input value="${card.title}" style="font-family:var(--font-heading); font-size:1.4rem; font-weight:600; width:100%; background:rgba(0,0,0,0.2); border:1px solid rgba(212,175,55,0.2); border-radius:8px; padding:0.4rem 0.8rem; color:var(--latte);" id="edit-title-${card.id}">
+                <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+                  ${badgeInput}
+                  <select id="edit-badgeclass-${card.id}" ${isConsultation ? 'disabled' : ''}>
+                    <option value="badge-amber" ${card.badgeClass==='badge-amber'?'selected':''}>Amber</option>
+                    <option value="badge-emerald" ${card.badgeClass==='badge-emerald'?'selected':''}>Emerald</option>
+                    <option value="badge-rose" ${card.badgeClass==='badge-rose'?'selected':''}>Rose</option>
+                  </select>
+                  ${isConsultation ? `<span style="font-size:0.65rem; color:var(--gold-light); opacity:0.5;"><i class="fas fa-sync-alt"></i> Otomatis</span>` : ''}
+                </div>
+              </div>
+              <div style="margin:1.2rem 0;">${body}</div>
+              <div class="card-footer-note" style="gap:0.8rem;">
+                <i class="fas ${card.footerIcon}"></i>
+                ${footerInput}
+                <div id="edit-evidence-${card.id}" style="display:flex; flex-wrap:wrap; gap:0.3rem; align-items:center;">
+                  ${card.evidenceLinks.map((l,i)=>`<span style="display:inline-flex; align-items:center; gap:0.2rem; background:rgba(255,255,255,0.03); padding:0.2rem 0.4rem; border-radius:8px; border:1px solid rgba(212,175,55,0.08);"><input value="${l.label}" style="width:70px; background:rgba(0,0,0,0.2); border:none; color:var(--latte); padding:0.2rem 0.3rem; font-size:0.7rem;" data-evidence-label="${i}"><input value="${l.url}" style="width:130px; background:rgba(0,0,0,0.2); border:none; color:var(--latte); padding:0.2rem 0.3rem; font-size:0.7rem;" data-evidence-url="${i}"><button type="button" onclick="removeEvidence('${card.id}',${i})" style="background:none; border:none; color:var(--rose); cursor:pointer; font-size:0.7rem;"><i class="fas fa-times-circle"></i></button></span>`).join('')}
+                  <button class="btn" onclick="addEvidence('${card.id}')" style="font-size:0.65rem; padding:0.2rem 0.6rem;">+ Link</button>
+                </div>
+              </div>
+              <div style="margin-top:1.2rem; display:flex; gap:0.8rem; flex-wrap:wrap; background:rgba(0,0,0,0.15); padding:0.6rem 1rem; border-radius:14px; border:1px dashed rgba(212,175,55,0.1); align-items:center;">
+                <span style="font-size:0.7rem; color:var(--gold-light); font-weight:500;">Style Card:</span>
+                <label style="font-size:0.65rem; margin:0;">Latar</label> <input type="color" id="edit-bg-${card.id}" value="${style.bg || '#060C1A'}" style="width:32px; height:32px; padding:0; border:none; border-radius:6px;">
+                <label style="font-size:0.65rem; margin:0;">Teks</label> <input type="color" id="edit-text-${card.id}" value="${style.textColor || '#FFF8E7'}" style="width:32px; height:32px; padding:0; border:none; border-radius:6px;">
+                <label style="font-size:0.65rem; margin:0;">Border</label> <input type="color" id="edit-border-${card.id}" value="${style.borderColor || '#D4AF37'}" style="width:32px; height:32px; padding:0; border:none; border-radius:6px;">
+              </div>
+              <div style="display:flex; gap:0.8rem; justify-content:flex-end; margin-top:1.2rem;">
+                <button class="btn" onclick="saveEdit('${card.id}')"><i class="fas fa-save"></i> Terapkan</button>
+                <button class="btn btn-rose" onclick="cancelEdit()"><i class="fas fa-times"></i> Batal</button>
+              </div>
+            </div>`;
+        }
+
+        function renderTimelineEdit(timeline, cardId) {
+            return timeline.map((m, i) =>
+                `<div class="timeline-edit">
+              <input type="text" value="${m.date}" placeholder="Tgl" style="width:70px;" data-timeline-date="${i}">
+              <input type="text" value="${m.desc}" placeholder="Deskripsi" style="flex:1;" data-timeline-desc="${i}">
+              <select data-timeline-dot="${i}">
+                <option value="" ${!m.dotClass?'selected':''}>Normal</option>
+                <option value="final" ${m.dotClass==='final'?'selected':''}>Final</option>
+                <option value="cancel" ${m.dotClass==='cancel'?'selected':''}>Cancel</option>
+              </select>
+              <button type="button" onclick="removeTimelineItem('${cardId}', ${i})" style="background:none; border:none; color:var(--rose); cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+            </div>`
+            ).join('') +
+                `<button type="button" class="btn" onclick="addTimelineItem('${cardId}')" style="font-size:0.7rem; padding:0.3rem 0.8rem;">+ Milestone</button>`;
+        }
+
+        function renderConsultationEdit(consultations, cardId) {
+            return consultations.map((c, i) =>
+                `<div class="timeline-edit" style="gap:0.3rem;">
+              <input value="${c.date}" placeholder="Tgl" style="width:60px;" data-cons-date="${i}">
+              <input value="${c.instansi}" placeholder="Instansi" style="width:100px;" data-cons-instansi="${i}">
+              <input value="${c.channel}" placeholder="Media" style="width:70px;" data-cons-channel="${i}">
+              <input value="${c.topic}" placeholder="Topik" style="flex:1;" data-cons-topic="${i}">
+              <input value="${c.category}" placeholder="Kategori" style="width:90px;" data-cons-cat="${i}">
+              <button type="button" onclick="removeConsultationItem('${cardId}', ${i})" style="background:none; border:none; color:var(--rose); cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+            </div>`
+            ).join('') +
+                `<button type="button" class="btn" onclick="addConsultationItem('${cardId}')" style="font-size:0.7rem; padding:0.3rem 0.8rem;">+ Konsultasi</button>`;
+        }
+
+        function renderRencanaEdit(items, cardId) {
+            return items.map((item, i) =>
+                `<div class="timeline-edit">
+              <input value="${item}" style="flex:1;" placeholder="Deskripsi Target" data-rencana-item="${i}">
+              <button type="button" onclick="removeRencanaItem('${cardId}', ${i})" style="background:none; border:none; color:var(--rose); cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+            </div>`
+            ).join('') +
+                `<button type="button" class="btn" onclick="addRencanaItem('${cardId}')" style="font-size:0.7rem; padding:0.3rem 0.8rem;">+ Item</button>`;
+        }
+
+        // ─── Global Calendar ────────────────────────────────────────────────
+        function renderGlobalCalendar() {
+            const container = document.getElementById('globalCalendarContainer');
+            if (!container) return;
+            const y = globalCalState.year,
+                m = globalCalState.month;
+            const date = new Date(y, m, 1);
+            const monthName = date.toLocaleString('id-ID', { month: 'long' });
+            const firstDayIndex = (date.getDay() + 6) % 7;
+            const totalDays = new Date(y, m + 1, 0).getDate();
+            const minimized = globalCalState.minimized || false;
+            const calBodyStyle = minimized ? 'display:none;' : 'display:block;';
+            const chevronStyle = minimized ? 'transform:rotate(0deg);' : 'transform:rotate(180deg);';
+
+            const allEvents = {};
+            dashboardData.forEach(card => {
+                if (card.calendarEvents) {
+                    Object.keys(card.calendarEvents).forEach(dateStr => {
+                        const ev = normalizeEventData(card.calendarEvents[dateStr]);
+                        if (ev.text) {
+                            if (!allEvents[dateStr]) allEvents[dateStr] = [];
+                            allEvents[dateStr].push({ cardId: card.id, text: ev.text, link: ev.link || '',
+                                color: getCardTextColor(card.id), title: card.title });
+                        }
+                    });
+                }
+            });
+
+            let html = `
+            <div class="card" style="background:rgba(8,20,40,0.7); backdrop-filter:blur(30px); border:1px solid rgba(212,175,55,0.4); box-shadow:0 30px 60px -20px rgba(0,0,0,0.9), 0 0 0 1px rgba(212,175,55,0.2), inset 0 0 80px rgba(212,175,55,0.02); border-radius:36px; padding:2rem 2.2rem;">
+              <div class="card-header" onclick="toggleGlobalCalendar()" style="cursor:pointer; user-select:none; display:flex; align-items:flex-start; gap:1rem;">
+                <div class="card-icon" style="background:rgba(212,175,55,0.15); box-shadow:0 0 30px rgba(212,175,55,0.06);"><i class="fas fa-calendar-alt"></i></div>
+                <div style="flex:1; display:flex; flex-direction:column; gap:0.3rem;">
+                  <div class="card-title" style="font-size:calc(var(--fs-card-title) * 1.1); letter-spacing:0.5px; display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+                    <span>📅 Kalender Terpadu</span>
+                    <i class="fas fa-chevron-down" id="globalChevron" style="font-size:0.8rem; color:var(--gold); transition:transform 0.3s; ${chevronStyle}"></i>
+                  </div>
+                  <div style="display:flex; gap:0.8rem; align-items:center; flex-wrap:wrap;">
+                    <span style="font-size:1rem; font-weight:500; color:var(--gold-light); letter-spacing:0.5px;">${monthName} ${y}</span>
+                    <button class="cal-nav-btn" onclick="changeGlobalMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+                    <button class="cal-nav-btn" onclick="changeGlobalMonth(1)"><i class="fas fa-chevron-right"></i></button>
+                    <span style="font-size:0.65rem; opacity:0.4;">${Object.keys(allEvents).length} hari beragenda</span>
+                  </div>
+                </div>
+              </div>
+
+              <div id="globalCalBody" style="${calBodyStyle} margin-top:1.2rem;">
+                <div class="cal-header-days">
+                  <div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div><div>Min</div>
+                </div>
+                <div class="cal-grid">`;
+
+            for (let i = 0; i < firstDayIndex; i++) html += `<div style="height:34px;"></div>`;
+
+            for (let day = 1; day <= totalDays; day++) {
+                const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+                const events = allEvents[dateStr] || [];
+                const hasEvent = events.length > 0;
+                const hasLink = hasEvent && events.some(e => e.link);
+                const cls = 'cal-day' + (hasEvent ? ' has-event' : '') + (hasLink ? ' has-link' : '');
+                const tooltip = hasEvent ? events.map(e => e.text + (e.link ? ' [🔗]' : '')).join('; ') : '';
+                html += `
+                <div class="${cls}" data-global-date="${dateStr}" title="${tooltip.replace(/"/g,'&quot;')}" onclick="clickGlobalDay('${dateStr}')">
+                  ${day}
+                </div>`;
+            }
+
+            html += `
+                </div>
+                <div class="cal-details" id="globalCalDetails" style="margin-top:1rem; display:none;">
+                  <div class="cal-details-title" style="display:flex; justify-content:space-between; align-items:center; color:var(--gold-light); font-weight:600; margin-bottom:6px;">
+                    <span id="globalCalDateTitle" style="color:var(--heading-color); font-size:0.85rem;"></span>
+                    <button class="btn" onclick="closeGlobalDetails()" style="font-size:0.65rem; padding:0.2rem 0.8rem; background:rgba(255,255,255,0.03); border-color:rgba(255,255,255,0.1); color:#fff;"><i class="fas fa-times"></i> Tutup</button>
+                  </div>
+                  <div id="globalCalEventsList"></div>
+                </div>
+              </div>
+            </div>`;
+            container.innerHTML = html;
+            applyTheme();
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 6.  INTERACTIONS (semua diberi checkPassword)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        window.toggleAccordion = function(cardId, event) {
+            if (event && (event.target.closest('button') || event.target.closest('input') || event.target.closest(
+                    'select') || event.target.closest('.mini-calendar') || event.target.closest('.edit-form'))) return;
+            const wrapper = document.getElementById(`details-wrapper-${cardId}`);
+            const chevron = document.getElementById(`chevron-${cardId}`);
+            if (wrapper) {
+                if (wrapper.style.display === 'none' || wrapper.style.display === '') {
+                    wrapper.style.display = 'block';
+                    if (chevron) chevron.style.transform = 'rotate(180deg)';
+                } else { wrapper.style.display = 'none'; if (chevron) chevron.style.transform = 'rotate(0deg)'; }
+            }
+        };
+
+        window.toggleCalendarBody = function(cardId) {
+            const state = getCalState(cardId);
+            state.minimized = !state.minimized;
+            const wrapper = document.getElementById(`cal-body-wrapper-${cardId}`);
+            const chevron = document.getElementById(`cal-chevron-${cardId}`);
+            if (wrapper) { wrapper.style.display = state.minimized ? 'none' : 'block'; if (chevron) chevron.style
+                    .transform = state.minimized ? 'rotate(0deg)' : 'rotate(180deg)'; }
+            saveAll();
+            renderGlobalCalendar();
+        };
+
+        window.changeMonth = function(cardId, direction) {
+            const state = getCalState(cardId);
+            state.month += direction;
+            if (state.month < 0) { state.month = 11;
+                state.year -= 1; } else if (state.month > 11) { state.month = 0;
+                state.year += 1; }
+            saveAll();
+            const cardEl = document.querySelector(`.card[data-card-id="${cardId}"]`);
+            if (!cardEl) return;
+            const calContainer = cardEl.querySelector('.mini-calendar');
+            if (!calContainer) return;
+            const newCal = renderMiniCalendar(cardId, state.year, state.month);
+            const temp = document.createElement('div');
+            temp.innerHTML = newCal;
+            calContainer.replaceWith(temp.firstElementChild);
+            applyTheme();
+            renderGlobalCalendar();
+        };
+
+        window.clickCalendarDay = function(cardId, dateStr) {
+            const card = dashboardData.find(c => c.id === cardId);
+            if (!card) return;
+            if (!card.calendarEvents) card.calendarEvents = {};
+            const detailsEl = document.getElementById(`cal-details-${cardId}`);
+            const titleEl = document.getElementById(`cal-date-title-${cardId}`);
+            const textInput = document.getElementById(`cal-text-input-${cardId}`);
+            const linkInput = document.getElementById(`cal-link-input-${cardId}`);
+            if (!detailsEl || !titleEl || !textInput || !linkInput) return;
+            const rawEvent = card.calendarEvents[dateStr];
+            const eventData = rawEvent ? normalizeEventData(rawEvent) : { text: '', link: '' };
+            detailsEl.style.display = 'block';
+            titleEl.innerText = `📅 ${dateStr}`;
+            titleEl.setAttribute('data-selected-date', dateStr);
+            textInput.value = eventData.text || '';
+            linkInput.value = eventData.link || '';
+            textInput.focus();
+            renderCalendarEvidence(cardId);
+        };
+
+        function renderCalendarEvidence(cardId) {
+            const card = dashboardData.find(c => c.id === cardId);
+            if (!card) return;
+            const list = document.getElementById(`cal-evidence-list-${cardId}`);
+            if (!list) return;
+            list.innerHTML = card.evidenceLinks.map((l, i) =>
+                `<span class="evidence-tag"><i class="fas fa-link"></i> ${l.label} <i class="fas fa-times" onclick="removeEvidenceFromCalendar('${cardId}',${i})" title="Hapus evidence"></i></span>`
+            ).join('');
+        }
+
+        window.saveDayEvent = function(cardId) {
+            checkPassword(() => {
+                const card = dashboardData.find(c => c.id === cardId);
+                if (!card) return;
+                if (!card.calendarEvents) card.calendarEvents = {};
+                const titleEl = document.getElementById(`cal-date-title-${cardId}`);
+                const textInput = document.getElementById(`cal-text-input-${cardId}`);
+                const linkInput = document.getElementById(`cal-link-input-${cardId}`);
+                if (!titleEl || !textInput || !linkInput) return;
+                const dateStr = titleEl.getAttribute('data-selected-date');
+                if (!dateStr) return;
+
+                const oldRaw = card.calendarEvents[dateStr];
+                const oldEvent = oldRaw ? normalizeEventData(oldRaw) : { text: '', link: '' };
+                const newText = textInput.value.trim();
+                const newLink = linkInput.value.trim();
+
+                if (newText === '' && newLink === '') {
+                    if (card.calendarEvents[dateStr]) {
+                        const eventToDelete = { ...card.calendarEvents[dateStr] };
+                        delete card.calendarEvents[dateStr];
+                        pushUndo({ type: 'deleteCalendarEvent', cardId: cardId, dateStr: dateStr,
+                        data: eventToDelete });
+                        updateTimelineFromCalendar(cardId, dateStr, '');
+                    }
+                } else {
+                    const newEvent = { text: newText, link: newLink };
+                    if (oldEvent.text !== newText || oldEvent.link !== newLink) {
+                        if (oldEvent.text || oldEvent.link) {
+                            pushUndo({ type: 'deleteCalendarEvent', cardId: cardId, dateStr: dateStr,
+                                data: { text: oldEvent.text, link: oldEvent.link } });
+                        }
+                        card.calendarEvents[dateStr] = newEvent;
+                        if (!newText.startsWith('📌 ')) {
+                            updateTimelineFromCalendar(cardId, dateStr, newText);
+                        }
+                    }
+                }
+                syncTimelineToCalendar(cardId);
+                saveAll();
+                const detailsEl = document.getElementById(`cal-details-${cardId}`);
+                if (detailsEl) detailsEl.style.display = 'none';
+                const state = getCalState(cardId);
+                const cardEl = document.querySelector(`.card[data-card-id="${cardId}"]`);
+                if (cardEl) {
+                    const calContainer = cardEl.querySelector('.mini-calendar');
+                    if (calContainer) {
+                        const newCal = renderMiniCalendar(cardId, state.year, state.month);
+                        const temp = document.createElement('div');
+                        temp.innerHTML = newCal;
+                        calContainer.replaceWith(temp.firstElementChild);
+                        applyTheme();
+                    }
+                }
+                renderGlobalCalendar();
+                showUndoToast('✅ Agenda <strong>' + dateStr + '</strong> disimpan.');
+            });
+        };
+
+        window.cancelDayEvent = function(cardId) {
+            const detailsEl = document.getElementById(`cal-details-${cardId}`);
+            if (detailsEl) detailsEl.style.display = 'none';
+        };
+
+        window.deleteDayEvent = function(cardId) {
+            checkPassword(() => {
+                const card = dashboardData.find(c => c.id === cardId);
+                if (!card || !card.calendarEvents) return;
+                const titleEl = document.getElementById(`cal-date-title-${cardId}`);
+                if (!titleEl) return;
+                const dateStr = titleEl.getAttribute('data-selected-date');
+                if (!dateStr) return;
+                if (card.calendarEvents[dateStr]) {
+                    if (confirm(`Hapus agenda tanggal ${dateStr}?`)) {
+                        const eventData = { ...card.calendarEvents[dateStr] };
+                        delete card.calendarEvents[dateStr];
+                        pushUndo({ type: 'deleteCalendarEvent', cardId: cardId, dateStr: dateStr,
+                        data: eventData });
+                        updateTimelineFromCalendar(cardId, dateStr, '');
+                        syncTimelineToCalendar(cardId);
+                        saveAll();
+                        const detailsEl = document.getElementById(`cal-details-${cardId}`);
+                        if (detailsEl) detailsEl.style.display = 'none';
+                        const state = getCalState(cardId);
+                        const cardEl = document.querySelector(`.card[data-card-id="${cardId}"]`);
+                        if (cardEl) {
+                            const calContainer = cardEl.querySelector('.mini-calendar');
+                            if (calContainer) {
+                                const newCal = renderMiniCalendar(cardId, state.year, state.month);
+                                const temp = document.createElement('div');
+                                temp.innerHTML = newCal;
+                                calContainer.replaceWith(temp.firstElementChild);
+                                applyTheme();
+                            }
+                        }
+                        renderGlobalCalendar();
+                        showUndoToast('🗑️ Agenda <strong>' + dateStr + '</strong> dihapus.');
+                    }
+                } else { alert('Tidak ada agenda.'); }
+            });
+        };
+
+        window.addEvidenceFromCalendar = function(cardId) {
+            checkPassword(() => {
+                const labelInput = document.getElementById(`cal-evidence-label-${cardId}`);
+                const urlInput = document.getElementById(`cal-evidence-url-${cardId}`);
+                if (!labelInput || !urlInput) return;
+                const label = labelInput.value.trim() || 'Evidence';
+                const url = urlInput.value.trim();
+                if (!url) { showUndoToast('⚠️ Masukkan URL terlebih dahulu.'); return; }
+                const card = dashboardData.find(c => c.id === cardId);
+                if (!card) return;
+                card.evidenceLinks.push({ label, url });
+                saveAll();
+                renderAllCards();
+                showUndoToast('✅ Evidence <strong>' + label + '</strong> ditambahkan.');
+            });
+        };
+
+        window.removeEvidenceFromCalendar = function(cardId, index) {
+            checkPassword(() => {
+                const card = dashboardData.find(c => c.id === cardId);
+                if (!card || !card.evidenceLinks[index]) return;
+                const removed = card.evidenceLinks[index];
+                card.evidenceLinks.splice(index, 1);
+                pushUndo({ type: 'deleteEvidence', cardId: cardId, data: removed, index: index });
+                saveAll();
+                renderAllCards();
+                showUndoToast('🗑️ Evidence <strong>' + removed.label + '</strong> dihapus.');
+            });
+        };
+
+        window.removeEvidence = function(cardId, index) {
+            checkPassword(() => {
+                const card = dashboardData.find(c => c.id === cardId);
+                if (!card || !card.evidenceLinks[index]) return;
+                const removed = card.evidenceLinks[index];
+                card.evidenceLinks.splice(index, 1);
+                pushUndo({ type: 'deleteEvidence', cardId: cardId, data: removed, index: index });
+                saveAll();
+                renderAllCards();
+                showUndoToast('🗑️ Evidence <strong>' + removed.label + '</strong> dihapus.');
+            });
+        };
+
+        window.addEvidence = function(cardId) {
+            checkPassword(() => {
+                syncCurrentEditValues(cardId);
+                const card = dashboardData.find(c => c.id === cardId);
+                if (card) card.evidenceLinks.push({ label: 'Evidence', url: 'https://' });
+                toggleEdit(cardId);
+            });
+        };
+
+        window.navigateToDate = function(cardId, dateStr) {
+            const formatted = parseDateToStr(dateStr);
+            const cardEl = document.querySelector(`.card[data-card-id="${cardId}"]`);
+            if (!cardEl) return;
+            const wrapper = document.getElementById(`details-wrapper-${cardId}`);
+            const chevron = document.getElementById(`chevron-${cardId}`);
+            if (wrapper) { wrapper.style.display = 'block'; if (chevron) chevron.style.transform = 'rotate(180deg)'; }
+            cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            cardEl.classList.remove('highlight-card');
+            void cardEl.offsetWidth;
+            cardEl.classList.add('highlight-card');
+
+            const state = getCalState(cardId);
+            const parts = formatted.split('-');
+            if (parts.length === 3) {
+                state.year = parseInt(parts[0]);
+                state.month = parseInt(parts[1]) - 1;
+                state.minimized = false;
+                const calContainer = cardEl.querySelector('.mini-calendar');
+                if (calContainer) {
+                    const newCal = renderMiniCalendar(cardId, state.year, state.month);
+                    const temp = document.createElement('div');
+                    temp.innerHTML = newCal;
+                    calContainer.replaceWith(temp.firstElementChild);
+                    applyTheme();
+                }
+                setTimeout(() => {
+                    const dayEl = cardEl.querySelector(`.cal-day[data-date="${formatted}"]`);
+                    if (dayEl) { const clickEvent = new MouseEvent('click', { bubbles: true });
+                        dayEl.dispatchEvent(clickEvent); }
+                }, 400);
+            }
+            showUndoToast('🔗 Menuju milestone <strong>' + dateStr + '</strong>');
+        };
+
+        window.navigateToCardAndDate = function(cardId, dateStr) {
+            navigateToDate(cardId, dateStr);
+            closeGlobalDetails();
+        };
+
+        window.toggleGlobalCalendar = function() {
+            globalCalState.minimized = !globalCalState.minimized;
+            const body = document.getElementById('globalCalBody');
+            const chevron = document.getElementById('globalChevron');
+            if (body) { body.style.display = globalCalState.minimized ? 'none' : 'block'; if (chevron) chevron.style
+                    .transform = globalCalState.minimized ? 'rotate(0deg)' : 'rotate(180deg)'; }
+            saveAll();
+        };
+
+        window.changeGlobalMonth = function(direction) {
+            globalCalState.month += direction;
+            if (globalCalState.month < 0) { globalCalState.month = 11;
+                globalCalState.year -= 1; } else if (globalCalState.month > 11) { globalCalState.month = 0;
+                globalCalState.year += 1; }
+            saveAll();
+            renderGlobalCalendar();
+        };
+
+        window.clickGlobalDay = function(dateStr) {
+            const details = document.getElementById('globalCalDetails');
+            const title = document.getElementById('globalCalDateTitle');
+            const list = document.getElementById('globalCalEventsList');
+            if (!details || !title || !list) return;
+            const events = [];
+            dashboardData.forEach(card => {
+                if (card.calendarEvents && card.calendarEvents[dateStr]) {
+                    const ev = normalizeEventData(card.calendarEvents[dateStr]);
+                    if (ev.text) events.push({ cardId: card.id, text: ev.text, link: ev.link || '',
+                        color: getCardTextColor(card.id), title: card.title });
+                }
+            });
+            if (events.length === 0) {
+                list.innerHTML = '<div style="opacity:0.5; padding:0.5rem 0; font-style:italic;">Tidak ada agenda.</div>';
+            } else {
+                list.innerHTML = events.map(e =>
+                    `<div class="cal-event-item" onclick="navigateToCardAndDate('${e.cardId}','${dateStr}')">
+                <span class="cal-event-dot" style="background:${e.color}; box-shadow:0 0 12px ${e.color};"></span>
+                <span class="cal-event-text" style="color:${e.color};">${e.text}</span>
+                ${e.link ? `<a href="${e.link}" target="_blank" class="cal-event-link-icon" onclick="event.stopPropagation();"><i class="fas fa-link"></i></a>` : ''}
+                <span style="opacity:0.3; font-size:0.7rem; margin-left:auto;">${e.title}</span>
+              </div>`
+                ).join('');
+            }
+            title.innerText = `📅 Agenda ${dateStr}`;
+            details.style.display = 'block';
+        };
+
+        window.closeGlobalDetails = function() {
+            const details = document.getElementById('globalCalDetails');
+            if (details) details.style.display = 'none';
+        };
+
+        window.deleteCard = function(cardId) {
+            checkPassword(() => {
+                if (confirm('Hapus RHK ini beserta seluruh data?')) {
+                    const idx = dashboardData.findIndex(c => c.id === cardId);
+                    if (idx === -1) return;
+                    const cardData = { ...dashboardData[idx] };
+                    cardData._originalIndex = idx;
+                    dashboardData.splice(idx, 1);
+                    if (calState[cardId]) delete calState[cardId];
+                    pushUndo({ type: 'deleteCard', data: cardData });
+                    saveAll();
+                    renderAllCards();
+                    showUndoToast('🗑️ RHK <strong>' + cardData.title + '</strong> dihapus.');
+                }
+            });
+        };
+
+        window.moveCard = function(cardId, direction) {
+            checkPassword(() => {
+                const idx = dashboardData.findIndex(c => c.id === cardId);
+                if (idx === -1) return;
+                const newIdx = idx + direction;
+                if (newIdx < 0 || newIdx >= dashboardData.length) return;
+                [dashboardData[idx], dashboardData[newIdx]] = [dashboardData[newIdx], dashboardData[idx]];
+                saveAll();
+                renderAllCards();
+            });
+        };
+
+        window.undoCardStyle = function(cardId) {
+            checkPassword(() => {
+                const card = dashboardData.find(c => c.id === cardId);
+                if (!card) return;
+                card.cardStyle = {};
+                saveAll();
+                renderAllCards();
+                showUndoToast('✅ Gaya custom <strong>' + card.title + '</strong> direset.');
+            });
+        };
+
+        window.toggleEdit = function(cardId) {
+            checkPassword(() => {
+                const cardEl = document.querySelector(`.card[data-card-id="${cardId}"]`);
+                if (!cardEl) return;
+                const card = dashboardData.find(c => c.id === cardId);
+                if (!card) return;
+                cardEl.outerHTML = renderCardEdit(card);
+                applyTheme();
+            });
+        };
+
+        window.saveEdit = function(cardId) {
+            checkPassword(() => {
+                syncCurrentEditValues(cardId);
+                const card = dashboardData.find(c => c.id === cardId);
+                if (card && card.timeline) syncTimelineToCalendar(cardId);
+                saveAll();
+                renderAllCards();
+                showUndoToast('✅ Perubahan pada <strong>' + (dashboardData.find(c => c.id === cardId)?.title || 'RHK') +
+                    '</strong> disimpan.');
+            });
+        };
+
+        window.cancelEdit = function() { renderAllCards(); };
+
+        function syncCurrentEditValues(cardId) {
+            const cardEl = document.querySelector(`.card[data-card-id="${cardId}"]`);
+            if (!cardEl) return;
+            const card = dashboardData.find(c => c.id === cardId);
+            if (!card) return;
+            const titleEl = document.getElementById(`edit-title-${cardId}`);
+            const badgeEl = document.getElementById(`edit-badge-${cardId}`);
+            const badgeClassEl = document.getElementById(`edit-badgeclass-${cardId}`);
+            const footerEl = document.getElementById(`edit-footer-${cardId}`);
+            const bgEl = document.getElementById(`edit-bg-${cardId}`);
+            const textEl = document.getElementById(`edit-text-${cardId}`);
+            const borderEl = document.getElementById(`edit-border-${cardId}`);
+            if (titleEl) card.title = titleEl.value;
+            if (badgeEl && !badgeEl.disabled) card.badgeText = badgeEl.value;
+            if (badgeClassEl && !badgeClassEl.disabled) card.badgeClass = badgeClassEl.value;
+            if (footerEl && !footerEl.disabled) card.footerText = footerEl.value;
+            card.cardStyle = { bg: bgEl ? bgEl.value : '#060C1A', textColor: textEl ? textEl.value : '#FFF8E7',
+                borderColor: borderEl ? borderEl.value : '#D4AF37' };
+            if (card.timeline) {
+                const dates = cardEl.querySelectorAll('[data-timeline-date]');
+                const descs = cardEl.querySelectorAll('[data-timeline-desc]');
+                const dots = cardEl.querySelectorAll('[data-timeline-dot]');
+                if (dates.length) {
+                    card.timeline = Array.from(dates).map((_, i) => ({ date: dates[i].value, desc: descs[i] ? descs[i]
+                            .value : '', dotClass: dots[i] ? dots[i].value : '' }));
+                }
+            }
+            if (card.consultations) {
+                const dates = cardEl.querySelectorAll('[data-cons-date]');
+                const inst = cardEl.querySelectorAll('[data-cons-instansi]');
+                const ch = cardEl.querySelectorAll('[data-cons-channel]');
+                const top = cardEl.querySelectorAll('[data-cons-topic]');
+                const cat = cardEl.querySelectorAll('[data-cons-cat]');
+                if (dates.length) {
+                    card.consultations = Array.from(dates).map((_, i) => ({ date: dates[i].value, instansi: inst[i] ?
+                            inst[i].value : '', channel: ch[i] ? ch[i].value : '', topic: top[i] ? top[i].value :
+                            '', category: cat[i] ? cat[i].value : '' }));
+                    const d = getConsultationDisplay(card);
+                    if (d) { card.badgeText = d.badgeText;
+                        card.footerText = d.footerText; }
+                }
+            }
+            if (card.rencanaItems) {
+                const items = cardEl.querySelectorAll('[data-rencana-item]');
+                if (items.length) card.rencanaItems = Array.from(items).map(el => el.value);
+            }
+            const evContainer = document.getElementById(`edit-evidence-${cardId}`);
+            if (evContainer) {
+                const labels = evContainer.querySelectorAll('[data-evidence-label]');
+                const urls = evContainer.querySelectorAll('[data-evidence-url]');
+                if (labels.length) {
+                    card.evidenceLinks = Array.from(labels).map((_, i) => ({ label: labels[i].value, url: urls[i] ?
+                            urls[i].value : '' }));
+                }
+            }
+        }
+
+        window.addTimelineItem = function(id) {
+            checkPassword(() => {
+                syncCurrentEditValues(id);
+                const c = dashboardData.find(c => c.id === id);
+                if (c && c.timeline) c.timeline.push({ date: '', desc: '', dotClass: '' });
+                toggleEdit(id);
+            });
+        };
+
+        window.removeTimelineItem = function(id, idx) {
+            checkPassword(() => {
+                syncCurrentEditValues(id);
+                const c = dashboardData.find(c => c.id === id);
+                if (c && c.timeline && c.timeline[idx]) {
+                    const removed = c.timeline[idx];
+                    c.timeline.splice(idx, 1);
+                    pushUndo({ type: 'deleteTimeline', cardId: id, data: removed, index: idx });
+                    syncTimelineToCalendar(id);
+                    saveAll();
+                    toggleEdit(id);
+                    showUndoToast('🗑️ Milestone dihapus.');
+                }
+            });
+        };
+
+        window.addConsultationItem = function(id) {
+            checkPassword(() => {
+                syncCurrentEditValues(id);
+                const c = dashboardData.find(c => c.id === id);
+                if (c && c.consultations) {
+                    c.consultations.push({ date: '', instansi: '', channel: '', topic: '', category: '' });
+                    const d = getConsultationDisplay(c);
+                    if (d) { c.badgeText = d.badgeText;
+                        c.footerText = d.footerText; }
+                    saveAll();
+                    toggleEdit(id);
+                    showUndoToast('✅ Konsultasi ditambahkan.');
+                }
+            });
+        };
+
+        window.removeConsultationItem = function(id, idx) {
+            checkPassword(() => {
+                syncCurrentEditValues(id);
+                const c = dashboardData.find(c => c.id === id);
+                if (c && c.consultations && c.consultations[idx]) {
+                    const removed = c.consultations[idx];
+                    c.consultations.splice(idx, 1);
+                    pushUndo({ type: 'deleteConsultation', cardId: id, data: removed, index: idx });
+                    const d = getConsultationDisplay(c);
+                    if (d) { c.badgeText = d.badgeText;
+                        c.footerText = d.footerText; }
+                    saveAll();
+                    toggleEdit(id);
+                    showUndoToast('🗑️ Konsultasi dihapus.');
+                }
+            });
+        };
+
+        window.addRencanaItem = function(id) {
+            checkPassword(() => {
+                syncCurrentEditValues(id);
+                const c = dashboardData.find(c => c.id === id);
+                if (c && c.rencanaItems) c.rencanaItems.push('');
+                toggleEdit(id);
+            });
+        };
+
+        window.removeRencanaItem = function(id, idx) {
+            checkPassword(() => {
+                syncCurrentEditValues(id);
+                const c = dashboardData.find(c => c.id === id);
+                if (c && c.rencanaItems && c.rencanaItems[idx]) {
+                    const removed = c.rencanaItems[idx];
+                    c.rencanaItems.splice(idx, 1);
+                    pushUndo({ type: 'deleteRencana', cardId: id, data: removed, index: idx });
+                    saveAll();
+                    toggleEdit(id);
+                    showUndoToast('🗑️ Item proyeksi dihapus.');
+                }
+            });
+        };
+
+        window.addNewCard = function() {
+            checkPassword(() => {
+                const newId = 'card-' + Date.now();
+                dashboardData.push({ id: newId, title: 'Rencana Hasil Kerja Baru', icon: 'fa-circle-dot',
+                    badgeClass: 'badge-amber', badgeText: 'Konseptual', timeline: [],
+                    footerIcon: 'fa-info-circle', footerText: 'Penanggung jawab pengerjaan analisis RHK.',
+                    evidenceLinks: [], cardStyle: {}, calendarEvents: {} });
+                calState[newId] = { year: 2026, month: 5, minimized: false };
+                saveAll();
+                renderAllCards();
+                setTimeout(() => toggleEdit(newId), 100);
+                showUndoToast('✅ RHK baru ditambahkan.');
+            });
+        };
+
+        window.toggleHeaderEdit = function() {
+            checkPassword(() => {
+                const area = document.getElementById('headerEditArea');
+                area.style.display = area.style.display === 'none' ? 'flex' : 'none';
+                document.getElementById('editKicker').value = headerData.kicker;
+                document.getElementById('editMainTitle').value = headerData.mainTitle;
+                document.getElementById('editPeriode').value = headerData.periode;
+                document.getElementById('editUpdate').value = headerData.update;
+            });
+        };
+
+        window.saveHeaderEdit = function() {
+            checkPassword(() => {
+                headerData.kicker = document.getElementById('editKicker').value;
+                headerData.mainTitle = document.getElementById('editMainTitle').value;
+                headerData.periode = document.getElementById('editPeriode').value;
+                headerData.update = document.getElementById('editUpdate').value;
+                saveAll();
+                applyHeader();
+                document.getElementById('headerEditArea').style.display = 'none';
+                showUndoToast('✅ Header diperbarui.');
+            });
+        };
+
+        window.cancelHeaderEdit = function() { document.getElementById('headerEditArea').style.display = 'none'; };
+
+        window.resetAllData = function() {
+            checkPassword(() => {
+                if (confirm('Kembalikan semua data ke default?')) {
+                    dashboardData = JSON.parse(JSON.stringify(defaultData));
+                    headerData = { kicker: 'Progress Report',
+                        mainTitle: 'Tim Fasilitas, Lingkungan Kerja dan Pengembangan Diri',
+                        periode: 'Januari – Juni 2026', update: '19 Juni 2026' };
+                    theme = { ...defaultTheme };
+                    calState = {};
+                    globalCalState = { year: 2026, month: 5, minimized: false };
+                    undoStack = [];
+                    localStorage.setItem('undoStack', JSON.stringify(undoStack));
+                    updateUndoUI();
+                    saveAll();
+                    applyHeader();
+                    renderAllCards();
+                    showUndoToast('🔄 Data direset ke default.');
+                }
+            });
+        };
+
+        window.toggleCustomPanel = function() {
+            checkPassword(() => {
+                document.getElementById('customPanel').classList.toggle('active');
+            });
+        };
+
+        window.applyCustomization = function() {
+            checkPassword(() => {
+                theme.bg = document.getElementById('bgColor').value;
+                theme.headingColor = document.getElementById('headingColor').value;
+                theme.bodyColor = document.getElementById('bodyColor').value;
+                theme.subtitleColor = document.getElementById('subtitleColor').value;
+                theme.badgeTextColor = document.getElementById('badgeTextColor').value;
+                theme.headingFont = document.getElementById('headingFont').value;
+                theme.bodyFont = document.getElementById('bodyFont').value;
+                theme.animationStyle = document.getElementById('animationStyle').value;
+                theme.particleStyle = document.getElementById('particleStyle').value;
+                theme.fsKicker = document.getElementById('fsKicker').value || '0.75rem';
+                theme.fsMainTitle = document.getElementById('fsMainTitle').value || '3.2rem';
+                theme.fsSubtitle = document.getElementById('fsSubtitle').value || '1.05rem';
+                theme.fsCardTitle = document.getElementById('fsCardTitle').value || '1.8rem';
+                theme.fsBadge = document.getElementById('fsBadge').value || '0.7rem';
+                theme.fsBody = document.getElementById('fsBody').value || '0.85rem';
+                theme.fsFooter = document.getElementById('fsFooter').value || '0.75rem';
+                saveAll();
+                applyTheme();
+                renderGlobalCalendar();
+                showUndoToast('✅ Tampilan diperbarui.');
+            });
+        };
+
+        window.undoCustomization = function() {
+            checkPassword(() => {
+                theme = { ...defaultTheme };
+                saveAll();
+                applyTheme();
+                document.getElementById('bgColor').value = theme.bg;
+                document.getElementById('headingColor').value = theme.headingColor;
+                document.getElementById('bodyColor').value = theme.bodyColor;
+                document.getElementById('subtitleColor').value = theme.subtitleColor;
+                document.getElementById('badgeTextColor').value = theme.badgeTextColor;
+                document.getElementById('headingFont').value = theme.headingFont;
+                document.getElementById('bodyFont').value = theme.bodyFont;
+                document.getElementById('animationStyle').value = theme.animationStyle;
+                document.getElementById('particleStyle').value = theme.particleStyle;
+                document.getElementById('fsKicker').value = theme.fsKicker;
+                document.getElementById('fsMainTitle').value = theme.fsMainTitle;
+                document.getElementById('fsSubtitle').value = theme.fsSubtitle;
+                document.getElementById('fsCardTitle').value = theme.fsCardTitle;
+                document.getElementById('fsBadge').value = theme.fsBadge;
+                document.getElementById('fsBody').value = theme.fsBody;
+                document.getElementById('fsFooter').value = theme.fsFooter;
+                renderGlobalCalendar();
+                showUndoToast('🔄 Kustomisasi di-undo.');
+            });
+        };
+
+        // ─── History Panel ──────────────────────────────────────────────────
+        function openHistoryPanel() {
+            const panel = document.getElementById('historyPanel');
+            const list = document.getElementById('historyList');
+            if (historySnapshots.length === 0) {
+                list.innerHTML = '<div style="opacity:0.5; text-align:center; padding:1rem;">Belum ada snapshot tersimpan.</div>';
+            } else {
+                list.innerHTML = historySnapshots.map((snap, i) => {
+                    const label = new Date(snap.timestamp).toLocaleString('id-ID');
+                    const count = snap.data ? snap.data.length : 0;
+                    return `<div class="history-item">
+                        <span class="timestamp">📅 ${label}</span>
+                        <span class="badge-history">${count} RHK</span>
+                        <button class="load-btn" onclick="loadSnapshot(${i})"><i class="fas fa-eye"></i> Lihat</button>
+                    </div>`;
+                }).join('');
+            }
+            panel.classList.add('active');
+        }
+
+        function closeHistoryPanel() {
+            document.getElementById('historyPanel').classList.remove('active');
+        }
+
+        // ─── Export ──────────────────────────────────────────────────────────
+        window.downloadHTML = function() {
+            checkPassword(() => {
+                const clone = document.getElementById('dashboard-content').cloneNode(true);
+                clone.querySelectorAll('.edit-btn, .move-btn, .undo-style-btn, .action-buttons, .header-edit-area')
+                    .forEach(el => el.remove());
+                const style = document.querySelector('style').innerHTML;
+                const customVars = `
+                :root {
+                  --bg-deep: ${theme.bg}; --heading-color: ${theme.headingColor}; --body-color: ${theme.bodyColor};
+                  --subtitle-color: ${theme.subtitleColor}; --badge-text-color: ${theme.badgeTextColor};
+                  --font-heading: ${theme.headingFont}; --font-body: ${theme.bodyFont};
+                  --fs-kicker: ${theme.fsKicker || '0.75rem'}; --fs-main-title: ${theme.fsMainTitle || '3.2rem'};
+                  --fs-subtitle: ${theme.fsSubtitle || '1.05rem'}; --fs-card-title: ${theme.fsCardTitle || '1.8rem'};
+                  --fs-badge: ${theme.fsBadge || '0.7rem'}; --fs-body: ${theme.fsBody || '0.85rem'}; --fs-footer: ${theme.fsFooter || '0.75rem'};
+                }
+              `;
+                const readOnlyScript = `
+              <script>
+                window.toggleAccordion = function(cardId, e) { const w=document.getElementById('details-wrapper-'+cardId); const c=document.getElementById('chevron-'+cardId); if(w){ if(w.style.display==='none'||w.style.display===''){w.style.display='block';if(c)c.style.transform='rotate(180deg)';}else{w.style.display='none';if(c)c.style.transform='rotate(0deg)';}}};
+                window.toggleCalendarBody = function(cardId) { const w=document.getElementById('cal-body-wrapper-'+cardId); const c=document.getElementById('cal-chevron-'+cardId); if(w){ if(w.style.display==='none'){w.style.display='block';if(c)c.style.transform='rotate(180deg)';}else{w.style.display='none';if(c)c.style.transform='rotate(0deg)';}}};
+                window.clickCalendarDay = function(cardId, dateStr) { const title = document.querySelector('.cal-day[data-date="'+dateStr+'"]')?.getAttribute('title'); if(title && !title.includes('Klik untuk')) alert(dateStr+"\\nAgenda: "+title); };
+                window.changeMonth = function(){};
+                window.saveDayEvent = function(){};
+                window.deleteDayEvent = function(){};
+                window.cancelDayEvent = function(){};
+                window.toggleGlobalCalendar = function(){};
+                window.changeGlobalMonth = function(){};
+                window.clickGlobalDay = function(dateStr){ alert("Agenda "+dateStr+":\\n"+(document.querySelector('.cal-day[data-global-date="'+dateStr+'"]')?.getAttribute('title')||'Tidak ada')); };
+                window.closeGlobalDetails = function(){};
+                window.navigateToCardAndDate = function(cardId, dateStr){ alert("Navigasi ke: "+cardId+" - "+dateStr); };
+                window.navigateToDate = function(cardId, dateStr){ alert("Navigasi ke milestone: "+dateStr); };
+              <\/script>
+            `;
+                const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Progress Report (Luxury Export)</title>
+                <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600&family=Marcellus&display=swap" rel="stylesheet">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+                <style>${style} ${customVars} .edit-btn, .move-btn, .undo-style-btn, .action-buttons { display:none!important; } .btn { pointer-events:auto; }</style>
+              </head><body style="background:${theme.bg}; padding:3rem 2rem;">${clone.outerHTML}${readOnlyScript}</body></html>`;
+                const blob = new Blob([html], { type: 'text/html' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'Progress_Report_Luxury.html';
+                a.click();
+                showUndoToast('📄 File HTML berhasil diunduh.');
+            });
+        };
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 7.  RENDER ALL & INIT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function renderAllCards() {
+            if (!dashboardData || dashboardData.length === 0) {
+                dashboardData = JSON.parse(JSON.stringify(defaultData));
+                saveAll();
+            }
+            document.getElementById('cardsContainer').innerHTML = dashboardData.map((card, i) => renderCardNormal(card, i))
+                .join('');
+            applyTheme();
+            renderGlobalCalendar();
+            updateUndoUI();
+            dashboardData.forEach(card => {
+                if (card.timeline && card.timeline.length > 0) {
+                    syncTimelineToCalendar(card.id);
+                }
+            });
+            if (currentSnapshot) {
+                disableEditingUI(true);
+                document.getElementById('historyBanner').classList.add('active');
+                document.getElementById('historyTimestamp').textContent = new Date(currentSnapshot.timestamp)
+                    .toLocaleString('id-ID');
+                document.getElementById('exitHistoryBtn').style.display = 'inline-flex';
+            } else {
+                disableEditingUI(false);
+                document.getElementById('historyBanner').classList.remove('active');
+                document.getElementById('exitHistoryBtn').style.display = 'none';
+            }
+            updateLockUI();
+            // Tampilkan password di panel
+            document.getElementById('currentPwdDisplay').textContent = '••••';
+        }
+
+        (function() {
+            const p = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) { const d = document.createElement('div');
+                d.className = 'particle';
+                d.style.left = Math.random() * 100 + '%';
+                d.style.bottom = Math.random() * 100 + '%';
+                d.style.animationDelay = Math.random() * 12 + 's';
+                d.style.animationDuration = (8 + Math.random() * 12) + 's';
+                p.appendChild(d); }
+        })();
+
+        applyHeader();
+        renderAllCards();
+        updateLockUI();
+
+        // Inisialisasi password dari localStorage
+        if (STORED_PASSWORD) {
+            document.getElementById('currentPwdDisplay').textContent = '••••';
+        }
+    </script>
+</body>
+</html>
